@@ -36,8 +36,16 @@
   "homepage": "https://github.com/MiSTERSPOONS/Kapture#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "connect-session-sequelize": "^5.0.1",
     "express": "^4.16.2",
+    "express-session": "^1.15.6",
     "morgan": "^1.9.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "pg": "^7.4.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.22.7"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
   }
 }
