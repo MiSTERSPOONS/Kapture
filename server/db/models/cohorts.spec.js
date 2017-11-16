@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const db = require('../index');
+const db = require('../../db');
 
 const Cohort = db.model('cohort');
 
