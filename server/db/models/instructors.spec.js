@@ -2,6 +2,7 @@ const { expect } = require('chai');
 const db = require('../../db');
 
 const Instructor = db.model('instructor');
+const Student = db.model('student');
 
 describe('Instructor model', () => {
 
@@ -10,6 +11,7 @@ describe('Instructor model', () => {
   describe('Create Instructor', () => {
 
     let testInstructor;
+    let testStudent;
 
     beforeEach( () => Instructor.create({
       firstName: 'Corey',
@@ -19,6 +21,15 @@ describe('Instructor model', () => {
     })
     .then( instructor => {
       testInstructor = instructor;
+      return Student.create({
+        firstName: 'StudentFirst',
+        lastName: 'StudentLast',
+        email: 'student@example.com',
+        password: 'password',
+      })
+    }).then( student => {
+      testStudent = student;
+      return testInstructor.setStudents([testStudent]);
     }));
 
     it('returns a firstName', () => {
@@ -32,6 +43,12 @@ describe('Instructor model', () => {
     })
     it('returns a password', () => {
       expect(testInstructor.password).to.be.equal('smite');
+    })
+    it('returns an instructor\'s student', () => {
+      testInstructor.getStudents()
+      .then( students => {
+        expect(students[0].firstName).to.be.equal('StudentFirst');
+      })
     })
   })
 })
