@@ -3,8 +3,8 @@ const db = require('../db');
 
 const Course = db.define('course', {
   name: {
-    type: Sequelize.STRING
-  }
-})
+    type: Sequelize.STRING,
+  },
+});
 
-module.exports = Course
+module.exports = Course;
