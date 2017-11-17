@@ -3,8 +3,8 @@ const Sequelize = require('sequelize');
 
 const Cohort = db.define('cohort', {
   name: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
-})
+});
 
-module.exports = Cohort
+module.exports = Cohort;
