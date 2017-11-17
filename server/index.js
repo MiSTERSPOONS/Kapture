@@ -5,8 +5,11 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
+const compression = require("compression");
 const sessionStore = new SequelizeStore({ db })
 const PORT = process.env.PORT || 8080
+const axios = require("axios");
+const qs = require("qs");
 const app = express()
 module.exports = app
 
@@ -25,8 +28,11 @@ const createApp = () => {
   app.use(morgan('dev'))
 
   // body parsing middleware
-  app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(bodyParser.json({ limit: "50mb" }))
+  app.use(bodyParser.urlencoded({ extended: true, limit: "50mb", parameterLimit: 50000}))
+
+  app.use(compression());
+
 
   // session middleware with passport
   app.use(session({
@@ -46,7 +52,6 @@ const createApp = () => {
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
-
   // any remaining requests with an extension (.js, .css, etc.) send 404
   .use((req, res, next) => {
     if (path.extname(req.path).length) {

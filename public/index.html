@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="./kairos.js"></script>
+    <title></title>
+  </head>
+  <body>
+    <div>This is great</div>
+    <video></video>
+    <script>
+    var video = document.querySelector('video')
+    , canvas;
+
+
+
+    /**
+    *  generates a still frame image from the stream in the <video>
+    *  appends the image to the <body>
+    */
+    var kairos = new Kairos('4931c65c', 'ef2e26ab17f2e2e090dcf979ad68c24a');
+
+    function myDetectCallback(response) {
+       console.log(JSON.parse(response.responseText));
+    }
+
+    function takeSnapshot() {
+      var img = document.querySelector('img') || document.createElement('img');
+      var context;
+      var width = video.offsetWidth
+        , height = video.offsetHeight;
+
+      canvas = canvas || document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+
+      context = canvas.getContext('2d');
+      context.drawImage(video, 0, 0, width, height);
+
+      img.src = canvas.toDataURL('image/png', 1.0);
+
+      const subject_id = "xifeng";
+      const image = img.src.slice(22);
+      const gallery_name = "students";
+
+
+      kairos.enroll(image, gallery_name, subject_id, myDetectCallback);
+
+      document.body.appendChild(img);
+    }
+
+    // use MediaDevices API
+    // docs: https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+    if (navigator.mediaDevices) {
+    // access the web cam
+    navigator.mediaDevices.getUserMedia({video: true})
+    // permission granted:
+      .then(function(stream) {
+        video.src = window.URL.createObjectURL(stream);
+        video.addEventListener('click', takeSnapshot);
+      })
+      // permission denied:
+      .catch(function(error) {
+        document.body.textContent = 'Could not access the camera. Error: ' + error.name;
+      });
+    }
+    </script>
+  </body>
+</html>
