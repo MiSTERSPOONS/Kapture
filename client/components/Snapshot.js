@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import api from '../../api_secrets.js';
+import jQuery from 'jquery';
 import Webcam from 'react-webcam';
 
 class Snapshot extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      imageSrc: null,
-    };
     this.setRef = this.setRef.bind(this);
     this.capture = this.capture.bind(this);
   }
@@ -17,20 +16,26 @@ class Snapshot extends Component {
   }
 
   capture() {
-    const imageSrc = this.webcam.getScreenshot();
-    this.setState({ imageSrc });
+    const imageSrc = this.webcam.getScreenshot().slice(22);
+    const kairos = new Kairos(api["api_id"], api["api_key"]);
+    const { id } = this.props.studentInfo;
+    // kairos.enroll(imageSrc, "test", id, (response) => {
+    //   console.log(JSON.parse(response.responseText));
+    // });
+
+    kairos.verify(imageSrc, 'test', '3', (response) => {
+      console.log(JSON.parse(response.responseText).images[0].transaction.confidence);
+    });
   }
 
   render() {
-    console.log('student', this.props.studentInfo);
-    console.log('imageSrc', this.state.imageSrc);
     return (
       <div>
         <Webcam
           audio={false}
           height={350}
           ref={this.setRef}
-          screenshotFormat="image/jpeg"
+          screenshotFormat="image/png"
           width={350}
         />
         <button onClick={this.capture}>Capture photo</button>
