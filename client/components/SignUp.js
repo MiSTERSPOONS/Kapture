@@ -57,12 +57,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         email: event.target.email.value,
         password: event.target.password.value,
       }
-      dispatch(submitStudentSignup(studentInfo))
-      event.target.first.value = '';
-      event.target.last.value = '';
-      event.target.email.value = '';
-      event.target.password.value = '';
-      event.target.confirmPass.value = '';
+      if(event.target.confirmPass.value === studentInfo.password) {
+        dispatch(submitStudentSignup(studentInfo))
+        event.target.first.value = '';
+        event.target.last.value = '';
+        event.target.email.value = '';
+        event.target.password.value = '';
+        event.target.confirmPass.value = '';
+      } else {
+        alert('Passwords do not Match')
+      }
     }
   }
 };
