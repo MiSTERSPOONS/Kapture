@@ -2,7 +2,7 @@ const router = require('express').Router();
 const Student = require('../db').model('student');
 module.exports = router;
 
-router.post('/register', (req, res, next) => {
+router.post('/', (req, res, next) => {
   Student.findOrCreate({ where: req.body })
     .spread((student, _) => {
       res.json(student)

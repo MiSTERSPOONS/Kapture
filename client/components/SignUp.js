@@ -1,30 +1,43 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { submitStudentSignup } from '../store';
+import { submitStudentSignup } from '../store/signup';
 
 const SignUp = (props) => {
-  console.log('props', props)
+  const state = {
+    name: '',
+    email: '',
+    password: '',
+    confirmPass: ''
+  }
   return (
-    <form onSubmit={ (event) => props.handleSubmit(event) }>
-      <div>
-        <label>Name: </label>
-        <input type="text" name="name" />
+    <div>
+      <form onSubmit={(event) => props.handleSubmit(event)}>
+        <h1>Sign Up!</h1>
+        <div>
+          <label>First Name: </label>
+          <input type="text" name="first" required="required"/>
+        </div>
+        <div>
+        <label>Last Name: </label>
+        <input type="text" name="last" required="required"/>
       </div>
-      <div>
-        <label>Email: </label>
-        <input type="text" name="email" />
-      </div>
-      <div>
-        <label>Password: </label>
-        <input type="text" name="password" />
-      </div>
-      <div>
-        <label>Confirm Password: </label>
-        <input type="text" name="confirmPass" />
-      </div>
-      <button className="btn btn-success">Submit</button>
-    </form>
-)};
+        <div>
+          <label>Email: </label>
+          <input type="text" name="email" required="required"/>
+        </div>
+        <div>
+          <label>Password: </label>
+          <input type="password" name="password" required="required"/>
+        </div>
+        <div>
+          <label>Confirm Password: </label>
+          <input type="password" name="confirmPass" required="required"/>
+        </div>
+        <button className="btn btn-success">Kapture Myself</button>
+      </form>
+    </div>
+  )
+};
 
 // STILL NEED TO FIGURE OUT WHAT TO DO WITH CONFIRM PASSWORD
 
@@ -37,14 +50,19 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     handleSubmit: (event) => {
+      event.preventDefault()
       const studentInfo = {
-        name: event.name.target.value,
-        email: event.email.target.value,
-        password: event.password.target.value,
+        firstName: event.target.first.value,
+        lastName: event.target.last.value,
+        email: event.target.email.value,
+        password: event.target.password.value,
       }
-      console.log('studentinfo***', studentInfo)
-      console.log('dispatching submitStudent........')
       dispatch(submitStudentSignup(studentInfo))
+      event.target.first.value = '';
+      event.target.last.value = '';
+      event.target.email.value = '';
+      event.target.password.value = '';
+      event.target.confirmPass.value = '';
     }
   }
 };

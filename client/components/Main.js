@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
 
+import Login from './Login'
+import SignUp from './SignUp'
 
-export default class Main extends Component {
-  constructor() {
-    super()
-
-  }
-  render() {
-    return (
-        <div>
-          <h1>Welcome to Kapture</h1>
-          <p>I am a...</p>
-          <Link to="/students"><button>Student</button></Link>
-          <Link to="/instructors"><button>Instructor</button></Link>
-        </div>
-    )
-  }
+const Main = (props) => {
+  return (
+    <div id='flextest'>
+      <SignUp />
+      <Login />
+    </div>
+  )
 }
+
+const mapStateToProps = (state) => {
+  return {
+
+  }
+};
+
+export default connect(mapStateToProps)(Main);
