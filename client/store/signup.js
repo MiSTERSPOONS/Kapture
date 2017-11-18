@@ -13,7 +13,7 @@ const studentSignup = studentInfo => ({ type: STUDENT_SIGNUP, studentInfo });
 
 export const submitStudentSignup = studentInfo => (dispatch) => {
   axios.post('/api/students', studentInfo)
-    .then(postedStudent => dispatch(studentSignup(postedStudent)))
+    .then(postedStudent => dispatch(studentSignup(postedStudent.data)))
     .then(() => history.push('/snapshot'))
     .catch(err => console.error(err));
 };
