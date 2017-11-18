@@ -3,11 +3,21 @@ const Student = require('../db').model('student');
 module.exports = router;
 
 router.post('/', (req, res, next) => {
-  Student.findOrCreate({ where: req.body })
-    .spread((student, _) => {
-      res.json(student)
-    })
-    .catch(next);
+  Student.findOrCreate({
+    where: req.body
+  })
+  .spread((student, _) => {
+    // findOrCreate used findOne() and then create()
+    // create() does not accept the attributes parameter!
+    const currentStudent = {
+      id: student.id,
+      firstName: student.firstName,
+      lastName: student.lastName,
+      email: student.email
+    }
+    res.json(currentStudent)
+  })
+  .catch(next);
 });
 
 router.post('/login', (req, res, next) => {
