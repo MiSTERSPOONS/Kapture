@@ -4,7 +4,7 @@ import { Router } from 'react-router'
 import { Route, Switch } from 'react-router-dom'
 import history from './history'
 
-import { Main } from './components'
+import { Welcome } from './components'
 import { SignUp } from './components'
 
 export default class Routes extends Component {
@@ -12,7 +12,7 @@ export default class Routes extends Component {
     return (
       <Router history={history}>
         <Switch>
-          <Route exact path="/" component={Main}/>
+          <Route exact path="/" component={Welcome}/>
           <Route exact path="/students" component={SignUp}/>
           <Route exact path="/instructors" component={SignUp}/>
         </Switch>
