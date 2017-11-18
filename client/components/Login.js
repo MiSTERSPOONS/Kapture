@@ -12,7 +12,7 @@ const Login = (props) => {
         </div>
         <div>
           <label>Password: </label>
-          <input type="text" name="password" />
+          <input type="password" name="password" />
         </div>
         <button className="btn btn-success">Submit</button>
       </form>
