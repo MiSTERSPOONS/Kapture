@@ -13,11 +13,6 @@ const instructorSignup = instructorInfo => ({ type: INSTRUCTOR_SIGNUP, instructo
 
 // THUNK
 
-<<<<<<< HEAD
-export const submitStudentSignup = studentInfo => (dispatch) => {
-  axios.post('/api/students', studentInfo)
-    .then(postedStudent => dispatch(studentSignup(postedStudent.data)))
-=======
 export const submitPersonSignup = (personInfo, who) => (dispatch) => {
   axios.post(`/api/${who}`, personInfo)
     .then(postedPerson => {
@@ -27,7 +22,6 @@ export const submitPersonSignup = (personInfo, who) => (dispatch) => {
         dispatch(instructorSignup(postedPerson.data))
       }
     })
->>>>>>> master
     .then(() => history.push('/snapshot'))
     .catch(err => console.error(err));
 };
