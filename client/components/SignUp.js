@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { submitStudentSignup } from '../store/signup';
+import { submitPersonSignup } from '../store/signup';
+import { withRouter } from 'react-router-dom'
 
 const SignUp = (props) => {
   const state = {
@@ -48,17 +49,18 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  const who = ownProps.match.url.slice(1)
   return {
     handleSubmit: (event) => {
       event.preventDefault()
-      const studentInfo = {
+      const personInfo = {
         firstName: event.target.first.value,
         lastName: event.target.last.value,
         email: event.target.email.value,
         password: event.target.password.value,
       }
-      if(event.target.confirmPass.value === studentInfo.password) {
-        dispatch(submitStudentSignup(studentInfo))
+      if(event.target.confirmPass.value === personInfo.password) {
+        dispatch(submitPersonSignup(personInfo, who))
         event.target.first.value = '';
         event.target.last.value = '';
         event.target.email.value = '';
@@ -71,4 +73,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignUp));

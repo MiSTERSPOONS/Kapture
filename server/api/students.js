@@ -9,7 +9,7 @@ router.post('/', (req, res, next) => {
   .spread((student, _) => {
     // findOrCreate used findOne() and then create()
     // create() does not accept the attributes parameter!
-    let currentStudent = {
+    const currentStudent = {
       id: student.id,
       firstName: student.firstName,
       lastName: student.lastName,

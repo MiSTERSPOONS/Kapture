@@ -14,7 +14,7 @@ export default class Routes extends Component {
       <Router history={history}>
         <Switch>
           <Route exact path="/" component={Welcome} />
-          <Route exact path="/students" component={Main} />
+          <Route exact path="/students" render={(routeProps) => <Main {...routeProps} />} />
           <Route exact path="/instructors" component={Main} />
           <Route exact path="/snapshot" component={Snapshot} />
         </Switch>
