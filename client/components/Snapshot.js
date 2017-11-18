@@ -22,8 +22,6 @@ class Snapshot extends Component {
   }
 
   render() {
-    console.log('student', this.props.studentInfo);
-    console.log('imageSrc', this.state.imageSrc);
     return (
       <div>
         <Webcam
