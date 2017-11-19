@@ -23,7 +23,6 @@ import { Snapshot } from '../components';
   // )}
 
 const Login = (props) => {
-  console.log('props', props)
   return (
     props.login ?
     <div>
@@ -43,7 +42,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps= (dispatch) => {
+const mapDispatchToProps= (dispatch, ownProps) => {
   return {
     loginWithFace: () => {
       dispatch(snapshotType('login'))

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Webcam from 'react-webcam';
 import { withRouter } from 'react-router-dom';
 import { enrollKairosCapture } from '../store/signup';
+import { loginKairosCapture } from '../store/login';
 
 class Snapshot extends Component {
   constructor(props) {
@@ -47,6 +48,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     sendCapture: (imageSrc, who, id, snapshotType) => {
       if (snapshotType === 'signup') dispatch(enrollKairosCapture(imageSrc, who, id));
+      if (snapshotType === 'login') dispatch(loginKairosCapture(imageSrc, ownProps.match.path.slice(1)))
     }
   }
 }
