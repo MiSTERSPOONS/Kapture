@@ -5,17 +5,22 @@ import history from '../history';
 
 const STUDENT_SIGNUP = 'STUDENT_SIGNUP';
 const INSTRUCTOR_SIGNUP = 'INSTRUCTOR_SIGNUP'
+const ENROLL_NEW_CAPTURE = 'ENROLL_NEW_CAPTURE';
 
 // Action Creators
 
-const studentSignup = studentInfo => ({ type: STUDENT_SIGNUP, studentInfo });
+const studentSignup = studentInfo => ({
+  type: STUDENT_SIGNUP, studentInfo });
 const instructorSignup = instructorInfo => ({ type: INSTRUCTOR_SIGNUP, instructorInfo });
+const enrollNewCapture = data => ({ type: ENROLL_NEW_CAPTURE, data });
+
 
 // THUNK
 
 export const submitPersonSignup = (personInfo, who) => (dispatch) => {
   axios.post(`/api/${who}`, personInfo)
     .then(postedPerson => {
+      postedPerson.data.userType = who;
       if (who === 'students') {
         dispatch(studentSignup(postedPerson.data))
       } else if (who === 'instructors') {
@@ -25,6 +30,14 @@ export const submitPersonSignup = (personInfo, who) => (dispatch) => {
     .then(() => history.push('/snapshot'))
     .catch(err => console.error(err));
 };
+
+export const enrollKairosCapture = (imageSrc, who) => dispatch => {
+  axios.post(`/api/${who}`)
+  const kairos = new Kairos(api["api_id"], api["api_key"]);
+  kairos.enroll(imageSrc, "test", id, (response) => {
+    console.log(JSON.parse(response.responseText));
+  });
+}
 
 export default (state = {}, action) => {
   switch (action.type) {
