@@ -31,12 +31,14 @@ export const submitPersonSignup = (personInfo, who) => (dispatch) => {
     .catch(err => console.error(err));
 };
 
-export const enrollKairosCapture = (imageSrc, who) => dispatch => {
-  axios.post(`/api/${who}`)
-  const kairos = new Kairos(api["api_id"], api["api_key"]);
-  kairos.enroll(imageSrc, "test", id, (response) => {
-    console.log(JSON.parse(response.responseText));
-  });
+export const enrollKairosCapture = (imageSrc, who, id) => dispatch => {
+  console.log('hitting thunk in signup')
+  let reqBody=JSON.stringify({'image': imageSrc, 'gallery_name': who, 'subject_id': 'tester' });
+  axios.post(`/api/kairos/enroll`, reqBody)
+  .then(response => {
+    console.log('INSIDE signup.js AFTER getting response')
+    console.log(response)})
+  .catch(error => console.error(error))
 }
 
 export default (state = {}, action) => {
