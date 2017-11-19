@@ -41,7 +41,9 @@ describe('Instructor model', () => {
       expect(testInstructor.email).to.be.equal('inst@example.com');
     });
     it('returns a password', () => {
-      expect(testInstructor.password).to.be.equal('instPw');
+      let salt = testInstructor.salt;
+      let testPassword = Instructor.encryptPassword('instPw', salt);
+      expect(testInstructor.password).to.be.equal(testPassword);
     });
   });
 
