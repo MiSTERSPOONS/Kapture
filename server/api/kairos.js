@@ -6,7 +6,6 @@ const api = require('../../secrets');
 module.exports = router;
 
 router.post('/enroll', (req, res, next) => {
-  console.log('Hitting api/kairos/enroll route')
   const { image, gallery_name, subject_id } = req.body
   axios.post('https://api.kairos.com/enroll', {
     image,
@@ -21,7 +20,6 @@ router.post('/enroll', (req, res, next) => {
   }
 )
   .then(response => {
-    console.log('AFTER GETTING RESPONSE')
     res.send(stringify(response));
   })
   .catch(next)

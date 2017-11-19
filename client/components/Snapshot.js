@@ -17,11 +17,10 @@ class Snapshot extends Component {
 
   capture() {
     const imageSrc = this.webcam.getScreenshot().slice(22);
-    this.props.sendCapture(imageSrc, this.props.studentInfo.id)
+    this.props.sendCapture(imageSrc, this.props.studentInfo.userType , this.props.studentInfo.id)
   }
 
   render() {
-    console.log("This is this.props! ", this.props)
     return (
       <div>
         <Webcam
@@ -43,8 +42,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    sendCapture: (imageSrc, id) => {
-      const who = ownProps.match.url.slice(1)
+    sendCapture: (imageSrc, who, id) => {
       dispatch(enrollKairosCapture(imageSrc, who, id));
     }
   }
