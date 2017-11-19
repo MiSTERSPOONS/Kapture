@@ -2,6 +2,7 @@ const Student = require('./students')
 const Cohort = require('./cohorts')
 const Instructor = require('./instructors');
 const Course = require('./courses');
+const Emotion = require('./emotions');
 
 // Put associations here
 Student.belongsToMany(Instructor, { through: 'instructors_students' });
@@ -9,6 +10,9 @@ Instructor.belongsToMany(Student, { through: 'instructors_students' });
 
 Student.belongsTo(Cohort);
 Cohort.hasMany(Student);
+
+Student.hasMany(Emotion)
+Emotion.belongsTo(Student)
 
 Student.belongsToMany(Course, { through: 'students_courses' });
 Course.belongsToMany(Student, { through: 'students_courses' });
@@ -22,9 +26,11 @@ Course.belongsToMany(Instructor, { through: 'instructors_courses' });
 Cohort.belongsToMany(Course,  { through: 'cohorts_courses' });
 Course.belongsToMany(Cohort,  { through: 'cohorts_courses' });
 
+
 module.exports = {
   Student,
   Cohort,
   Instructor,
-  Course
+  Course,
+  Emotion
 }

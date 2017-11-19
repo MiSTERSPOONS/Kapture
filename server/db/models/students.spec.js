@@ -41,7 +41,9 @@ describe('Student Model', () => {
       expect(testStudent.email).to.be.equal('student@example.com');
     });
     it('returns a password', () => {
-      expect(testStudent.password).to.be.equal('studentPw');
+      let salt = testStudent.salt;
+      let testPassword = Student.encryptPassword('studentPw', salt);
+      expect(testStudent.password).to.be.equal(testPassword);
     });
   });
 
