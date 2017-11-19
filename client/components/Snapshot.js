@@ -17,7 +17,7 @@ class Snapshot extends Component {
 
   capture() {
     const imageSrc = this.webcam.getScreenshot().slice(22);
-    this.props.sendCapture(imageSrc, this.props.studentInfo.userType , this.props.studentInfo.id)
+    this.props.sendCapture(imageSrc, this.props.studentInfo.userType, this.props.studentInfo.id, this.props.snapshotType)
   }
 
   render() {
@@ -36,14 +36,17 @@ class Snapshot extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-    studentInfo: state.signup
-  });
+const mapStateToProps = (state, ownProps) => {
+  return {
+    studentInfo: state.signup,
+    snapshotType: state.snapshotType
+  }
+}
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    sendCapture: (imageSrc, who, id) => {
-      dispatch(enrollKairosCapture(imageSrc, who, id));
+    sendCapture: (imageSrc, who, id, snapshotType) => {
+      if (snapshotType === 'signup') dispatch(enrollKairosCapture(imageSrc, who, id));
     }
   }
 }
