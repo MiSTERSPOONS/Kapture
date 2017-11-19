@@ -1,13 +1,16 @@
 const router = require('express').Router();
-const axios = require('axios')
+const axios = require('axios');
+var stringify = require('json-stringify-safe');
 
 module.exports = router;
 
 router.post('/enroll', (req, res, next) => {
   console.log('Hitting api/kairos/enroll route')
-  // console.log('reqbody*******', req.body)
+  const { image, gallery_name, subject_id } = req.body
   axios.post('https://api.kairos.com/enroll', {
-    data: req.body
+    image,
+    gallery_name,
+    subject_id
   }, {
     headers: {
       'Content-type': "application/json",
@@ -18,16 +21,7 @@ router.post('/enroll', (req, res, next) => {
 )
   .then(response => {
     console.log('AFTER GETTING RESPONSE')
-    res.json(response)
+    res.send(stringify(response));
   })
   .catch(next)
 })
-
-// const payload = {
-//   ,
-//   type     : "POST",
-//   dataType : "raw",
-//   data     : JSON.stringify(data),
-//   success  : callback,
-//   error    : callback
-// }

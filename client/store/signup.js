@@ -33,7 +33,7 @@ export const submitPersonSignup = (personInfo, who) => (dispatch) => {
 
 export const enrollKairosCapture = (imageSrc, who, id) => dispatch => {
   console.log('hitting thunk in signup')
-  let reqBody=JSON.stringify({'image': imageSrc, 'gallery_name': who, 'subject_id': 'tester' });
+  let reqBody = {image: imageSrc, gallery_name: who, subject_id: 'tester2' };
   axios.post(`/api/kairos/enroll`, reqBody)
   .then(response => {
     console.log('INSIDE signup.js AFTER getting response')
