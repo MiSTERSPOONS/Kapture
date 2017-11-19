@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const axios = require('axios');
 var stringify = require('json-stringify-safe');
+const api = require('../../secrets');
 
 module.exports = router;
 
@@ -14,8 +15,8 @@ router.post('/enroll', (req, res, next) => {
   }, {
     headers: {
       'Content-type': "application/json",
-      'app_id': '9f418065',
-      'app_key': '8b444ff262d134d358136dd0f35da763'
+      'app_id': api.app_id,
+      'app_key': api.app_key
     },
   }
 )
