@@ -18,16 +18,17 @@ export const loginKairosCapture = (imageSrc, who) => (dispatch) => {
     .then((response) => {
       const confidence = response.data.data.images[0].candidates[0].confidence
       const imageURL = response.data.data.uploaded_image_url
+      const studentId = response.data.data.images[0].candidates[0].subject_id
       console.log('response*****', response);
       console.log('imageURL*****', imageURL);
       if (confidence > 0.60) {
         history.push(`/students/${response.data.data.images[0].candidates[0].subject_id}`)
-        return imageURL
+        return { imageURL, studentId }
       }
     })
-    .then(imageURL => {
-      console.log('2nd .then imageURL=>', imageURL)
-      axios.post('/api/azure/recognize', { imageURL })
+    .then(info => {
+      console.log('2nd .then imageURL=>', info.imageURL)
+      axios.post('/api/azure/recognize', { info })
       .then(response => {
         console.log('THE RESPONSE', response)
       })
