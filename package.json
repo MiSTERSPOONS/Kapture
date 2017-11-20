@@ -47,6 +47,7 @@
     "express-session": "^1.15.6",
     "history": "^4.7.2",
     "jquery": "^3.2.1",
+    "json-stringify-safe": "^5.0.1",
     "morgan": "^1.9.0",
     "path": "^0.12.7",
     "pg": "^6.4.2",

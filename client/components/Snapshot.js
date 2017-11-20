@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import api from '../../api_secrets.js';
-import jQuery from 'jquery';
 import Webcam from 'react-webcam';
+import { withRouter } from 'react-router-dom';
+import { enrollKairosCapture } from '../store/signup';
+import { loginKairosCapture } from '../store/login';
 
 class Snapshot extends Component {
   constructor(props) {
@@ -17,15 +18,7 @@ class Snapshot extends Component {
 
   capture() {
     const imageSrc = this.webcam.getScreenshot().slice(22);
-    const kairos = new Kairos(api["api_id"], api["api_key"]);
-    const { id } = this.props.studentInfo;
-    // kairos.enroll(imageSrc, "test", id, (response) => {
-    //   console.log(JSON.parse(response.responseText));
-    // });
-
-    kairos.verify(imageSrc, 'test', '3', (response) => {
-      console.log(JSON.parse(response.responseText).images[0].transaction.confidence);
-    });
+    this.props.sendCapture(imageSrc, this.props.studentInfo.userType, this.props.studentInfo.id, this.props.snapshotType)
   }
 
   render() {
@@ -44,8 +37,20 @@ class Snapshot extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-    studentInfo: state.signup
-  });
+const mapStateToProps = (state, ownProps) => {
+  return {
+    studentInfo: state.signup,
+    snapshotType: state.snapshotType
+  }
+}
 
-export default connect(mapStateToProps, null)(Snapshot);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    sendCapture: (imageSrc, who, id, snapshotType) => {
+      if (snapshotType === 'signup') dispatch(enrollKairosCapture(imageSrc, who, id));
+      if (snapshotType === 'login') dispatch(loginKairosCapture(imageSrc, ownProps.match.path.slice(1)))
+    }
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Snapshot));
