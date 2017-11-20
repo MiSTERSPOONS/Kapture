@@ -7,6 +7,7 @@ import history from './history';
 import { Welcome } from './components';
 import { Main } from './components';
 import { Snapshot } from './components';
+import { SuccessPlaceholder } from './components';
 
 export default class Routes extends Component {
   render() {
@@ -17,6 +18,7 @@ export default class Routes extends Component {
           <Route exact path="/students" render={(routeProps) => <Main {...routeProps} />} />
           <Route exact path="/instructors" component={Main} />
           <Route exact path="/snapshot" component={Snapshot} />
+          <Route exact path="/SuccessPlaceholder" component={SuccessPlaceholder} />
         </Switch>
       </Router>
     );
