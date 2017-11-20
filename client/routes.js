@@ -16,6 +16,7 @@ export default class Routes extends Component {
           <Route exact path="/students/:id" component={StudentDashboard} />
           <Route exact path="/instructors" component={Main} />
           <Route exact path="/snapshot" component={Snapshot} />
+          <Route exact path="/SuccessPlaceholder" component={SuccessPlaceholder} />
         </Switch>
       </Router>
     );
