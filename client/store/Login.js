@@ -10,8 +10,6 @@ const STUDENT_LOGIN = 'STUDENT_LOGIN';
 
 const studentLogin = studentInfo => ({type: STUDENT_LOGIN, studentInfo });
 
-
-
 // THUNK
 
 export const loginKairosCapture = (imageSrc, who) => (dispatch) => {
@@ -19,6 +17,7 @@ export const loginKairosCapture = (imageSrc, who) => (dispatch) => {
   axios.post('/api/kairos/recognize', reqBody)
     .then((response) => {
       console.log('response*****', response);
+      history.push(`/students/${response.data.data.images[0].candidates[0].subject_id}`)
  })
     .catch(error => console.error(error));
 };
