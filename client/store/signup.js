@@ -34,6 +34,7 @@ export const enrollKairosCapture = (imageSrc, who, id) => (dispatch) => {
   const reqBody = { image: imageSrc, gallery_name: who, subject_id: id };
   axios.post('/api/kairos/enroll', reqBody)
     .then((response) => {
+      history.push(`/students/${reqBody.subject_id}`)
       console.log(response);
  })
     .catch(error => console.error(error));
