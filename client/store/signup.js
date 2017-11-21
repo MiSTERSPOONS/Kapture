@@ -25,8 +25,15 @@ export const submitPersonSignup = (personInfo, who) => (dispatch) => {
       } else if (who === 'instructors') {
         dispatch(instructorSignup(postedPerson.data));
       }
+      return postedPerson
     })
-    .then(() => history.push('/snapshot'))
+    .then((postedPerson) => {
+      if (who === 'students') {
+        history.push('/snapshot') 
+      } else if (who === 'instructors') {
+        history.push(`/${who}/${postedPerson.data.id}`)        
+      }
+    })
     .catch(err => console.error(err));
 };
 
@@ -34,7 +41,7 @@ export const enrollKairosCapture = (imageSrc, who, id) => (dispatch) => {
   const reqBody = { image: imageSrc, gallery_name: who, subject_id: id };
   axios.post('/api/kairos/enroll', reqBody)
     .then((response) => {
-      history.push(`/students/${reqBody.subject_id}`)
+      history.push(`/${who}/${reqBody.subject_id}`)
       console.log(response);
  })
     .catch(error => console.error(error));
