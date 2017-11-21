@@ -26,7 +26,7 @@ const Login = (props) => {
   return (
     props.login ?
     <div>
-      <Snapshot />
+      <Snapshot display="" />
     </div>
     :
     <div>
@@ -42,7 +42,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps= (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loginWithFace: () => {
       dispatch(snapshotType('login'))

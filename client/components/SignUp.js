@@ -9,7 +9,7 @@ const SignUp = (props) => {
   return (
       props.signup.id ?
       <div>
-        <Snapshot />
+        <Snapshot display="" />
       </div>
         :
         <div>
