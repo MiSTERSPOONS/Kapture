@@ -12,7 +12,7 @@ class Snapshot extends Component {
   }
 
   componentDidMount() {
-    store.dispatch(snapshotType('dashboard'));
+    // store.dispatch(snapshotType('dashboard')); **************THIS IS A PROBLEM PIECE******************************
     const videoBox = document.getElementById('video');
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
@@ -70,6 +70,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     sendCapture: (imageSrc, who, id, type) => {
+      console.log('type in snapshot component', type )
       if (type === 'signup') dispatch(enrollKairosCapture(imageSrc, who, id));
       if (type === 'login') dispatch(loginKairosCapture(imageSrc, ownProps.match.path.slice(1)))
       if (type === 'dashboard') dispatch(loginKairosCapture(imageSrc, 'students')) // CHANGE TO OTHER THUNK
