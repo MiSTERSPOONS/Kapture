@@ -19,12 +19,14 @@ export const loginKairosCapture = (imageSrc, who) => (dispatch) => {
   let studentId
   axios.post('/api/kairos/recognize', reqBody)
     .then((response) => {
+      console.log('responseeeeeeeee:', response)
       confidence = response.data.data.images[0].candidates[0].confidence
       imageURL = response.data.data.uploaded_image_url
       studentId = response.data.data.images[0].candidates[0].subject_id
       return { imageURL, studentId }
     })
     .then(info => {
+      console.log('getting here?????????????')
       axios.post('/api/azure/recognize', { info })
       .then(response => {
         if (confidence > 0.60) {
