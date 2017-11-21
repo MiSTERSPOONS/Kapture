@@ -8,17 +8,31 @@ const STUDENT_LOGIN = 'STUDENT_LOGIN';
 
 // Action Creators
 
-const studentLogin = studentInfo => ({type: STUDENT_LOGIN, studentInfo });
+const studentLogin = studentInfo => ({ type: STUDENT_LOGIN, studentInfo });
 
 // THUNK
 
 export const loginKairosCapture = (imageSrc, who) => (dispatch) => {
-  const reqBody = { image: imageSrc, gallery_name: who};
+  const reqBody = { image: imageSrc, gallery_name: who };
   axios.post('/api/kairos/recognize', reqBody)
     .then((response) => {
+      const confidence = response.data.data.images[0].candidates[0].confidence
+      const imageURL = response.data.data.uploaded_image_url
+      const studentId = response.data.data.images[0].candidates[0].subject_id
       console.log('response*****', response);
-      history.push(`/students/${response.data.data.images[0].candidates[0].subject_id}`)
- })
+      console.log('imageURL*****', imageURL);
+      if (confidence > 0.60) {
+        history.push(`/students/${response.data.data.images[0].candidates[0].subject_id}`)
+        return { imageURL, studentId }
+      }
+    })
+    .then(info => {
+      console.log('2nd .then imageURL=>', info.imageURL)
+      axios.post('/api/azure/recognize', { info })
+      .then(response => {
+        console.log('THE RESPONSE', response)
+      })
+    })
     .catch(error => console.error(error));
 };
 
