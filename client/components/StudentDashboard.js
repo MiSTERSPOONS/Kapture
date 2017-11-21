@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { retrieveStudentThunk } from '../store';
+import { Snapshot } from '../components';
 
 class StudentDashboard extends Component {
   componentDidMount() {
@@ -10,6 +11,7 @@ class StudentDashboard extends Component {
   render() {
     return (
       <div>
+        <Snapshot display="none" />
         <h1>Hello, {this.props.currentStudent.firstName}!</h1>
         <table>
           <thead>
