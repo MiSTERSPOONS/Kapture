@@ -16,6 +16,15 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 
+router.get('/:id', (req, res, next) => {
+  Instructor.findById(req.params.id, {
+    include: [{ all: true }],
+    attributes: { exclude: ['password', 'salt']
+  }})
+    .then(instructor => res.json(instructor))
+    .catch(next);
+});
+
 router.post('/login', (req, res, next) => {
   const { email, password } = req.body;
   Instructor.findOne({ where: { email, password }})
