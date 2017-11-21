@@ -11,33 +11,37 @@ class SnapshotInterval extends Component {
   }
 
   componentDidMount() {
-    const video = document.getElementById('video');
-    // Get access to the camera!
+    const videoBox = document.getElementById('video');
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      // Not adding `{ audio: true }` since we only want video now
       navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
-        video.src = window.URL.createObjectURL(stream);
-        video.play();
+        videoBox.src = window.URL.createObjectURL(stream);
+        videoBox.play();
       });
     }
   }
 
   capture() {
-    // Elements for taking the snapshot
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    let context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, 320, 240); // Taking photo
+    const dataURL = canvas.toDataURL(); // Base64
+
+    this.props.sendCapture(dataURL, this.props.studentInfo.userType, this.props.studentInfo.id, this.props.snapshotType)
+  }
+
+  captureInterval() {
     var video = document.getElementById('video');
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
-
-    context.drawImage(video, 0, 0, 640, 480); // Taking photo
+    context.drawImage(video, 0, 0, 320, 240); // Taking photo
     var dataURL = canvas.toDataURL(); // Base64
 
-    // Interval for timer photos
-    // This works even when browser is minimized!!!
     const kaptureTimer = () => {
-      context.drawImage(video, 0, 0, 640, 480);
+      context.drawImage(video, 0, 0, 320, 240);
       console.log(canvas.toDataURL().slice(0, 30));
     }
-    setInterval(kaptureTimer, 3000);
+    setInterval(kaptureTimer, this.props.interval);
 
     // this.props.sendCapture(dataURL, this.props.studentInfo.userType, this.props.studentInfo.id, this.props.snapshotType)
   }
@@ -47,7 +51,7 @@ class SnapshotInterval extends Component {
       <div>
         <video id="video" width="0" height="0" autoPlay />
         <button id="snap" onClick={this.capture}>Kapture Myself</button>
-        <canvas id="canvas" width="640" height="480" />
+        <canvas id="canvas" width="320" height="240" />
       </div>
     );
   }
@@ -56,7 +60,9 @@ class SnapshotInterval extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     studentInfo: state.signup,
-    snapshotType: state.snapshotType
+    snapshotType: state.snapshotType,
+    display: ownProps.display,
+    interval: 3000// INTERVAL SETTING FROM INSTRUCTOR LATER?
   }
 }
 
