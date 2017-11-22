@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { enrollKairosCapture } from '../store/signup';
-import { loginKairosCapture } from '../store/login';
-import store, { snapshotType } from '../store';
+import store, { setSnapshotType, registerUserWithAPI, loginUserWithAPI } from '../store';
 
 class Snapshot extends Component {
   constructor(props) {
@@ -26,8 +24,13 @@ class Snapshot extends Component {
     const canvas = document.getElementById('canvas');
     let context = canvas.getContext('2d');
     context.drawImage(video, 0, 0, 320, 240); // Taking photo
-    const dataURL = canvas.toDataURL(); // Base64
-    this.props.sendCapture(dataURL, this.props.studentInfo.userType, this.props.studentInfo.id, this.props.snapshotType)
+    const imageBase64 = canvas.toDataURL(); // Base64
+    this.props.sendCapture(
+      imageBase64,
+      this.props.userType || 'students',
+      this.props.currentUser || null,
+      this.props.snapshotType || 'login'
+    )
   }
 
   // captureInterval() {
@@ -35,7 +38,7 @@ class Snapshot extends Component {
   //   var canvas = document.getElementById('canvas');
   //   var context = canvas.getContext('2d');
   //   context.drawImage(video, 0, 0, 320, 240); // Taking photo
-  //   var dataURL = canvas.toDataURL(); // Base64
+  //   var imageBase64 = canvas.toDataURL(); // Base64
 
   //   const kaptureTimer = () => {
   //     context.drawImage(video, 0, 0, 320, 240);
@@ -43,13 +46,18 @@ class Snapshot extends Component {
   //   }
   //   setInterval(kaptureTimer, this.props.interval);
 
-  //   // this.props.sendCapture(dataURL, this.props.studentInfo.userType, this.props.studentInfo.id, this.props.snapshotType)
+  //   this.props.sendCapture(
+  //     imageBase64,
+  //     this.props.userType || 'students',
+  //     this.props.currentUser.id,
+  //     this.props.setSnapshotType || 'login'
+  //   )
   // }
 
   render() {
     return (
       <div>
-        <video id="video" width="320" height="240" autoPlay style={ { display: this.props.display } } />
+        <video id="video" width="320" height="240" autoPlay style={{ display: this.props.display }} />
         <button id="snap" onClick={this.capture}>Kapture Myself</button>
         <canvas id="canvas" width="320" height="240" />
       </div>
@@ -59,18 +67,22 @@ class Snapshot extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    studentInfo: state.signup,
+    currentUser: state.currentUser,
+    userType: state.userType,
     snapshotType: state.snapshotType,
     display: ownProps.display,
-    interval: 3000// INTERVAL SETTING FROM INSTRUCTOR LATER?
+    interval: 3000 // INTERVAL SETTING FROM INSTRUCTOR LATER?
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    sendCapture: (imageSrc, who, id, type) => {
-      if (type === 'signup') dispatch(enrollKairosCapture(imageSrc, who, id));
-      if (type === 'login') dispatch(loginKairosCapture(imageSrc, 'students'))
+    sendCapture: (imageBase64, userType, userInfo, snapshotType) => {
+      if (snapshotType === 'signup') {
+        dispatch(setSnapshotType('login'));
+        dispatch(registerUserWithAPI(imageBase64, userType, userInfo));
+      }
+      if (snapshotType === 'login') dispatch(loginUserWithAPI(imageBase64, userType))
     }
   }
 }

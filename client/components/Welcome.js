@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux';
 
-const Welcome = (props) => {
+const Welcome = () => {
   return (
       <div>
         <h1>Welcome to Kapture</h1>
@@ -13,10 +12,4 @@ const Welcome = (props) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-
-  }
-};
-
-export default connect(mapStateToProps)(Welcome);
+export default Welcome;

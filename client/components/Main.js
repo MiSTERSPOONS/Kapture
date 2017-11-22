@@ -1,26 +1,41 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 
 import Login from './Login';
 import SignUp from './SignUp';
+import { setUserType } from '../store';
 
-const Main = props => (
-  <div>
-    {
-      !props.snapshotType ?
+class Main extends Component {
+
+  componentDidMount() {
+    this.props.setUserType(this.props.match.url.slice(1));
+  }
+
+  render() {
+    return (
+      <div>
         <div id="flextest">
           <SignUp />
           <Login />
         </div>
-        :
-        <Login />
+      </div>
+    )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    snapshotType: state.snapshotType
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUserType: (userType) => {
+      dispatch(setUserType(userType));
     }
-  </div>
-);
+  }
+}
 
-const mapStateToProps = state => ({
-  snapshotType: state.snapshotType
-});
-
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
