@@ -7,7 +7,7 @@ import history from '../history';
 const SignUp = (props) => {
   return (
     <div>
-      <form onSubmit={(event) => props.handleSubmit(event, props.userType)}>
+      <form onSubmit={(event) => props.handleSubmit(event)}>
         <h1>Sign Up!</h1>
         <div>
           <label>First Name: </label>
@@ -43,9 +43,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    handleSubmit: (event, userType) => {
+    handleSubmit: (event) => {
       event.preventDefault()
       const userInfo = {
         firstName: event.target.first.value,
