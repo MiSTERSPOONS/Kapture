@@ -4,7 +4,7 @@ const SIGNUP_SNAPSHOT = 'SIGNUP_SNAPSHOT';
 
 // Action Creators
 
-export const snapshotType = typeString => ({type: SIGNUP_SNAPSHOT, typeString });
+export const setSnapshotType = typeString => ({type: SIGNUP_SNAPSHOT, typeString });
 
 export default (state = '', action) => {
   switch (action.type) {

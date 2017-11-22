@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { snapshotType } from '../store';
-import { Snapshot } from '../components';
+import { setSnapshotType } from '../store';
 import history from '../history';
 
 // const logInForm = () => {
@@ -41,7 +40,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loginWithFace: () => {
-      dispatch(snapshotType('login'))
+      dispatch(setSnapshotType('login'))
       history.push('/snapshot');
     }
   }

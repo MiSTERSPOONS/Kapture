@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { submitPersonSignup } from '../store/signup';
+import { setUser, setSnapshotType, registerUser } from '../store';
 import { withRouter } from 'react-router-dom';
-import { Snapshot } from '../components';
-import { snapshotType } from '../store';
+import history from '../history';
 
 const SignUp = (props) => {
   return (
     <div>
-      <form onSubmit={(event) => props.handleSubmit(event)}>
+      <form onSubmit={(event) => props.handleSubmit(event, props.userType)}>
         <h1>Sign Up!</h1>
         <div>
           <label>First Name: </label>
@@ -40,29 +39,29 @@ const SignUp = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-
+    userType: state.userType
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const who = ownProps.match.url.slice(1)
   return {
-    handleSubmit: (event) => {
+    handleSubmit: (event, userType) => {
       event.preventDefault()
-      const personInfo = {
+      const userInfo = {
         firstName: event.target.first.value,
         lastName: event.target.last.value,
         email: event.target.email.value,
         password: event.target.password.value,
       }
-      if (event.target.confirmPass.value === personInfo.password) {
-        dispatch(snapshotType('signup'));
-        dispatch(submitPersonSignup(personInfo, who))
+      if (event.target.confirmPass.value === userInfo.password) {
         event.target.first.value = '';
         event.target.last.value = '';
         event.target.email.value = '';
         event.target.password.value = '';
         event.target.confirmPass.value = '';
+        dispatch(setUser(userInfo));
+        dispatch(setSnapshotType('signup'));
+        history.push('/snapshot');
       } else {
         alert('Passwords do not Match')
       }
