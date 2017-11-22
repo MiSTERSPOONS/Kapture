@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import store, { setSnapshotType, registerUserWithAPI, loginUserWithAPI } from '../store';
+import { Navigation } from '../components';
 
 class Snapshot extends Component {
   constructor(props) {
@@ -56,10 +57,15 @@ class Snapshot extends Component {
 
   render() {
     return (
-      <div>
-        <video id="video" width="320" height="240" autoPlay style={{ display: this.props.display }} />
-        <button id="snap" onClick={this.capture}>Kapture Myself</button>
-        <canvas id="canvas" width="320" height="240" />
+      <div id="snapshot-container">
+      <Navigation />
+          <div className="center">
+            <video id="video" width="640" height="480" autoPlay style={{ display: this.props.display }} />
+          </div>
+          <div className="center">
+            <button className="kapture-button" id="snap" onClick={this.capture}>Kapture Myself</button>
+          </div>
+          <canvas id="canvas" width="640" height="480" />
       </div>
     );
   }

@@ -27,6 +27,19 @@ const Login = (props) => {
     <div>
       <h1>Login</h1>
       <button onClick={props.loginWithFace} className="btn btn-success">Login with Face</button>
+      <p onClick={props.showLoginForm}>Login like a boring person</p>
+      <div id="login-form">
+        <div>
+          <label>Email:
+        <input className="form-control" type="text" name="email" required="required" />
+          </label>
+        </div>
+        <div>
+          <label>Password:
+        <input className="form-control" type="password" name="password" required="required" />
+          </label>
+        </div>
+      </div>
     </div>
   )
 }
@@ -42,6 +55,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     loginWithFace: () => {
       dispatch(setSnapshotType('login'))
       history.push('/snapshot');
+    },
+    showLoginForm: () => {
+      $('#login-form').toggle('fast');
     }
   }
 }
