@@ -29,7 +29,7 @@ class Snapshot extends Component {
       imageBase64,
       this.props.userType || 'students',
       this.props.currentUser || null,
-      this.props.snapshotType || 'login',
+      this.props.snapshotType || 'login'
     )
   }
 

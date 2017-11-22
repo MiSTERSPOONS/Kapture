@@ -20,14 +20,6 @@ export const retrieveUserThunk = (userType, userId) => (dispatch) => {
     .catch(err => console.error(err));
 };
 
-export const registerUser = (userInfo, userType) => (dispatch) => {
-  if (userType === 'students') {
-    history.push('/snapshot')
-  } else if (userType === 'instructors') {
-    // history.push(`/${userType}/${newUser.data.id}`)
-  }
-};
-
 export const registerUserWithAPI = (imageSrc, userType, userInfo) => (dispatch) => {
   axios.post(`/api/${userType}`, userInfo)
     .then(newUser => {

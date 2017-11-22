@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setUser, setSnapshotType, registerUser } from '../store';
+import { setUser, setSnapshotType } from '../store';
 import { withRouter } from 'react-router-dom';
 import history from '../history';
 
