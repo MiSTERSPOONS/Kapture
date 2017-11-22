@@ -3,12 +3,14 @@ import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import signup from './signup';
+import login from './login';
 import snapshotType from './snapshotType';
 import currentUser from './currentUser';
 import userType from './userType';
 
 const reducer = combineReducers({
   signup,
+  login,
   snapshotType,
   currentUser,
   userType
@@ -22,6 +24,7 @@ const store = createStore(reducer, middleware);
 
 export default store;
 export * from './signup';
+export * from './login';
 export * from './snapshotType';
 export * from './currentUser';
 export * from './userType';

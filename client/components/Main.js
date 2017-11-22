@@ -5,17 +5,12 @@ import { withRouter } from 'react-router-dom'
 import Login from './Login';
 import SignUp from './SignUp';
 
-const Main = props => (
+const Main = () => (
   <div>
-    {
-      !props.snapshotType ?
-        <div id="flextest">
-          <SignUp />
-          <Login />
-        </div>
-        :
-        <Login />
-    }
+    <div id="flextest">
+      <SignUp />
+      <Login />
+    </div>
   </div>
 );
 

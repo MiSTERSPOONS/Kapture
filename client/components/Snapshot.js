@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { enrollKairosCapture } from '../store/signup';
-import { loginKairosCapture } from '../store/login';
-import store, { snapshotType } from '../store';
+import store, { enrollKairosCapture, loginKairosCapture } from '../store';
 
 class Snapshot extends Component {
   constructor(props) {

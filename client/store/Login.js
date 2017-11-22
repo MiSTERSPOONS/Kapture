@@ -27,12 +27,12 @@ export const loginKairosCapture = (imageSrc, who) => (dispatch) => {
       return { imageURL, studentId }
     })
     .then(info => {
-      dispatch(retrieveUserThunk('students', info.studentId));
       console.log('getting here?????????????')
       axios.post('/api/azure/recognize', { info })
       .then(response => {
         if (confidence > 0.60) {
           history.push(`/students/${studentId}`)
+          dispatch(retrieveUserThunk('students', info.studentId));
         }
       })
     })
@@ -43,8 +43,6 @@ export default (state = {}, action) => {
   switch (action.type) {
     case STUDENT_LOGIN:
       return action.studentInfo;
-    case INSTRUCTOR_LOGIN:
-      return action.instructorInfo;
     default:
       return state;
   }
