@@ -1,0 +1,47 @@
+$primary-color: #5B33C8;
+
+body {
+  font-family: 'Raleway', sans-serif;
+  margin: 0;
+}
+
+#welcome-container {
+  padding-top: 10vh;
+  height: 90vh;
+  // background-image: url("/images/welcome-bg.jpg");
+  background-position: right;
+  background-repeat: no-repeat;
+  color: $primary-color;
+  .welcome-button-container {
+    margin-top: 40px;
+    .welcome-button {
+      transition: background-color 0.3s ease;
+      font-size: 18px;
+      margin: 20px;
+      border-radius: 0px;
+      padding: 10px;
+      border: 1px solid black;
+      text-decoration: none;
+      background-color: $primary-color;
+      color: white;
+      &:hover {
+        background-color: white;
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+#main-container {
+  display: flex;
+  justify-content: center;
+}
+
+.center {
+  text-align: center;
+}
+
+#canvas {
+  display: none;
+}
+

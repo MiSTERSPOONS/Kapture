@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import store, { setSnapshotType, registerUserWithAPI, loginUserWithAPI } from '../store';
+import { Navigation } from '../components';
 
 class Snapshot extends Component {
   constructor(props) {
@@ -57,6 +58,7 @@ class Snapshot extends Component {
   render() {
     return (
       <div>
+      <Navigation />
         <video id="video" width="320" height="240" autoPlay style={{ display: this.props.display }} />
         <button id="snap" onClick={this.capture}>Kapture Myself</button>
         <canvas id="canvas" width="320" height="240" />
