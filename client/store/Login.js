@@ -1,5 +1,6 @@
 import axios from 'axios';
 import history from '../history';
+import { retrieveUserThunk } from '../store';
 
 // Action Type
 
@@ -26,6 +27,7 @@ export const loginKairosCapture = (imageSrc, who) => (dispatch) => {
       return { imageURL, studentId }
     })
     .then(info => {
+      dispatch(retrieveUserThunk('students', info.studentId));
       console.log('getting here?????????????')
       axios.post('/api/azure/recognize', { info })
       .then(response => {

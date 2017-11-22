@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { retrieveStudentThunk } from '../store';
+import { retrieveUserThunk } from '../store';
 import { Snapshot } from '../components';
 
 class StudentDashboard extends Component {
   componentDidMount() {
-    this.props.getStudentEmotion();
+    this.props.getStudentEmotion(this.props.userType || 'students', this.props.match.params.id);
   }
   render() {
+    let student = this.props.currentUser;
     return (
       <div>
         <Snapshot display="none" />
-        <h1>Hello, {this.props.currentStudent.firstName}!</h1>
+        <h1>Hello, {student.firstName}!</h1>
         <table>
           <thead>
             <tr>
@@ -28,8 +29,8 @@ class StudentDashboard extends Component {
           </thead>
           <tbody>
           {
-            this.props.currentStudent.emotions ?
-              this.props.currentStudent.emotions.map(emoData => {
+            student.emotions ?
+            student.emotions.map(emoData => {
                 return (
                 <tr key={emoData.id}>
                   <td>{emoData.anger}</td>
@@ -55,15 +56,15 @@ class StudentDashboard extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentStudent: state.currentStudent
+    userType: state.userType,
+    currentUser: state.currentUser
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const studentId = ownProps.match.params.id;
   return {
-    getStudentEmotion: () => {
-      dispatch(retrieveStudentThunk(studentId));
+    getStudentEmotion: (type, id) => {
+      dispatch(retrieveUserThunk(type, id));
     }
   }
 };
