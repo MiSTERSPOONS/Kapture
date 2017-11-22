@@ -3,31 +3,52 @@ const Instructor = require('../db').model('instructor');
 module.exports = router;
 
 router.post('/', (req, res, next) => {
-  Instructor.findOrCreate({ where: req.body })
-    .spread((instructor, _) => {
+  Instructor.create(req.body)
+    .then((instructor) => {
       const currentInstructor = {
         id: instructor.id,
         firstName: instructor.firstName,
         lastName: instructor.lastName,
-        email: instructor.email
-      }
-      res.json(currentInstructor)
+        email: instructor.email,
+      };
+      req.login(instructor, err => (err ? next(err) : res.json(currentInstructor)));
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'SequelizeUniqueConstraintError') {
+        res.status(401).send('User already exists');
+      } else {
+        next(err);
+      }
+    });
 });
+
 
 router.get('/:id', (req, res, next) => {
   Instructor.findById(req.params.id, {
     include: [{ all: true }],
     attributes: { exclude: ['password', 'salt']
   }})
-    .then(instructor => res.json(instructor))
-    .catch(next);
+  .then(instructor => res.json(instructor))
+  .catch(next);
 });
 
-router.post('/login', (req, res, next) => {
-  const { email, password } = req.body;
-  Instructor.findOne({ where: { email, password }})
-    .then(instructor => res.json(instructor))
-    .catch(next);
-});
+// router.post('/login', (req, res, next) => {
+//   const { email, password } = req.body;
+//   Instructor.findOne({ where: { email, password }})
+//   .then(instructor => res.json(instructor))
+//   .catch(next);
+// });
+
+// router.post('/', (req, res, next) => {
+//   Instructor.findOrCreate({ where: req.body })
+//     .spread((instructor, _) => {
+//       const currentInstructor = {
+//         id: instructor.id,
+//         firstName: instructor.firstName,
+//         lastName: instructor.lastName,
+//         email: instructor.email
+//       }
+//       res.json(currentInstructor)
+//     })
+//     .catch(next);
+// });

@@ -28,8 +28,9 @@ class Main extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    snapshotType: state.snapshotType
-  }
+    snapshotType: state.snapshotType,
+    userType: state.userType,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

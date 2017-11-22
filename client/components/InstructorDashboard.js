@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { retrieveUserThunk } from '../store';
+import { Snapshot } from '../components';
+import Graphs from './Graphs';
 
-export default class InstructorDashboard extends Component {
+class InstructorDashboard extends Component {
   render() {
     return (
       <div>
@@ -9,3 +14,20 @@ export default class InstructorDashboard extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    userType: state.userType,
+    currentUser: state.currentUser,
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    getStudentEmotion: (type, id) => {
+      dispatch(retrieveUserThunk(type, id));
+    }
+  }
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(InstructorDashboard));
