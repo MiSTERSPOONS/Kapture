@@ -41,6 +41,29 @@ body {
   }
 }
 
+#snapshot-container {
+  #video {
+    border: 3px solid $primary-color;
+    width: 640px;
+    height: 480px;
+  }
+  .kapture-button {
+    transition: background-color 0.3s ease;
+    font-size: 18px;
+    margin: 20px;
+    border-radius: 0px;
+    padding: 10px;
+    border: 1px solid black;
+    text-decoration: none;
+    background-color: $primary-color;
+    color: white;
+    &:hover {
+      background-color: white;
+      color: $primary-color;
+    }
+  }
+}
+
 .center {
   text-align: center;
 }

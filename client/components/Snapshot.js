@@ -57,11 +57,15 @@ class Snapshot extends Component {
 
   render() {
     return (
-      <div>
+      <div id="snapshot-container">
       <Navigation />
-        <video id="video" width="320" height="240" autoPlay style={{ display: this.props.display }} />
-        <button id="snap" onClick={this.capture}>Kapture Myself</button>
-        <canvas id="canvas" width="320" height="240" />
+          <div className="center">
+            <video id="video" width="640" height="480" autoPlay style={{ display: this.props.display }} />
+          </div>
+          <div className="center">
+            <button className="kapture-button" id="snap" onClick={this.capture}>Kapture Myself</button>
+          </div>
+          <canvas id="canvas" width="640" height="480" />
       </div>
     );
   }
