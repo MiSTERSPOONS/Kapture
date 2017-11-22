@@ -15,6 +15,7 @@ export const setUser = user => ({ type: RETRIEVE_USER, user });
 export const retrieveUserThunk = (userType, userId) => (dispatch) => {
   axios.get(`/api/${userType}/${userId}`)
     .then((foundUser) => {
+      console.log('foundUser', foundUser)
       dispatch(setUser(foundUser.data));
     })
     .catch(err => console.error(err));
