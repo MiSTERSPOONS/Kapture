@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 
 import Login from './Login';
 import SignUp from './SignUp';
+import { Navigation } from '../components';
 import { setUserType } from '../store';
 
 class Main extends Component {
@@ -15,7 +16,8 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <div id="flextest">
+        <Navigation />
+        <div id="main-container">
           <SignUp />
           <Login />
         </div>

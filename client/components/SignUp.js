@@ -10,24 +10,29 @@ const SignUp = (props) => {
       <form onSubmit={(event) => props.handleSubmit(event)}>
         <h1>Sign Up!</h1>
         <div>
-          <label>First Name: </label>
-          <input type="text" name="first" required="required" />
+          <label>First Name:
+            <input className="form-control" type="text" name="first" required="required" />
+          </label>
         </div>
         <div>
-          <label>Last Name: </label>
-          <input type="text" name="last" required="required" />
+          <label>Last Name:
+            <input className="form-control" type="text" name="last" required="required" />
+          </label>
         </div>
         <div>
-          <label>Email: </label>
-          <input type="text" name="email" required="required" />
+          <label>Email:
+            <input className="form-control" type="text" name="email" required="required" />
+          </label>
         </div>
         <div>
-          <label>Password: </label>
-          <input type="password" name="password" required="required" />
+          <label>Password:
+            <input className="form-control" type="password" name="password" required="required" />
+          </label>
         </div>
         <div>
-          <label>Confirm Password: </label>
-          <input type="password" name="confirmPass" required="required" />
+          <label>Confirm Password:
+            <input className="form-control" type="password" name="confirmPass" required="required" />
+          </label>
         </div>
         <button className="btn btn-success">Kapture Myself</button>
       </form>
