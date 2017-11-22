@@ -34,7 +34,11 @@ body {
 
 #main-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  #login-form {
+    margin-top: 20px;
+    display: none;
+  }
 }
 
 .center {
