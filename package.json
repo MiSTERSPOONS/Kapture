@@ -45,6 +45,7 @@
     "connect-session-sequelize": "^5.0.1",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "highcharts": "^6.0.3",
     "history": "^4.7.2",
     "jquery": "^3.2.1",
     "json-stringify-safe": "^5.0.1",
