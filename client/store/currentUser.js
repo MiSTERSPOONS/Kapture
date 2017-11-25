@@ -41,7 +41,6 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
   let confidence;
   axios.post('/api/kairos/recognize', reqBody)
     .then( response => {
-      console.log('loginUserWithAPI KAIROS response:', response)
       confidence = response.data.data.images[0].candidates[0].confidence
       let imageURL = response.data.data.uploaded_image_url
       let studentId = response.data.data.images[0].candidates[0].subject_id
@@ -52,7 +51,6 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
         axios.post('/api/azure/recognize', { info })
         .then( response => {
           if (confidence > 0.60) {
-            console.log('loginUserWithAPI AZURE response:', response)
             history.push(`/${userType}/${info.studentId}`)
             dispatch(retrieveUserThunk(userType, info.studentId));
           }
@@ -61,6 +59,10 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
         history.push(`/${userType}/${info.studentId}`)
         dispatch(retrieveUserThunk(userType, info.studentId));
       }
+      // return something
+    })
+    .then(() => {
+      console.log('HIT currentUser at the End')
     })
     .catch(error => console.error(error));
 };
