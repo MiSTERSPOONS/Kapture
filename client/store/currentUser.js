@@ -4,11 +4,12 @@ import history from '../history';
 // Action Type
 
 const RETRIEVE_USER = 'RETRIEVE_USER';
+const REMOVE_USER = 'REMOVE_USER';
 
 // Action Creators
 
 export const setUser = user => ({ type: RETRIEVE_USER, user });
-
+const removeUser = () => ({ type: REMOVE_USER })
 
 // THUNK
 
@@ -64,10 +65,21 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
     .catch(error => console.error(error));
 };
 
+export const logout = () => dispatch => {
+    axios.post('/auth/logout')
+      .then(_ => {
+        dispatch(removeUser())
+        history.push('/')
+      })
+      .catch(err => console.log(err))
+}
+
 export default (state = {}, action) => {
   switch (action.type) {
     case RETRIEVE_USER:
       return action.user;
+    case REMOVE_USER:
+      return {}
     default:
       return state;
   }

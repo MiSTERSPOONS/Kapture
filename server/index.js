@@ -38,7 +38,10 @@ const createApp = () => {
     saveUninitialized: false,
   }));
 
-  passport.serializeUser((user, done) => done(null, user.id));
+  passport.serializeUser((user, done) => {
+    console.log('user', user)
+    done(null, user.id)}
+  );
   passport.deserializeUser((id, done) =>
     db.model('instructor').findById(id)
       .then(user => done(null, user))
@@ -48,8 +51,8 @@ const createApp = () => {
   app.use(passport.session());
 
   // auth and api routes
-  // app.use('/auth', require('./auth'))
   app.use('/api', require('./api'));
+  app.use('/auth', require('./auth'))
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')));
