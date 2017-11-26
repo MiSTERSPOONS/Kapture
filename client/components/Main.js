@@ -4,9 +4,9 @@ import { withRouter } from 'react-router-dom'
 
 import Login from './Login';
 import SignUp from './SignUp';
-import { Navigation } from '../components';
+// import { Navigation } from '../components';
 import { setUserType } from '../store';
-import { me } from '../store'
+import { me } from '../store';
 
 class Main extends Component {
   componentDidMount() {
@@ -16,7 +16,6 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <Navigation />
         <div id="main-container">
           <SignUp />
           <Login />

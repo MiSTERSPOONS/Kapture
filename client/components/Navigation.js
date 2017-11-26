@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../store'
+import PropTypes from 'prop-types';
+
 
 const Navigation = (props) => {
   return (
+    <div>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link className="navbar-brand" to="/">Kapture</Link>
       {
@@ -13,7 +16,11 @@ const Navigation = (props) => {
           :
           null
       }
-    </nav>
+      </nav>
+      {
+        props.children
+      }
+      </div>
   )
 }
 
@@ -31,4 +38,8 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navigation));
+
+Navigation.propTypes = {
+  children: PropTypes.object
+}
