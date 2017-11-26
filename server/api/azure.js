@@ -16,7 +16,7 @@ router.post('/recognize', (req, res, next) => {
   })
   .then(response => {
     Emotion.findOrCreate({
-      where: Object.assign({}, response.data[0].scores, { studentId: req.body.info.studentId })
+      where: Object.assign({}, response.data[0].scores, { studentId: req.body.info.userId })
     })
     .spread((emotion, _) => {
       res.json(emotion)
