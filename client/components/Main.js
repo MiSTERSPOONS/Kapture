@@ -6,9 +6,9 @@ import Login from './Login';
 import SignUp from './SignUp';
 import { Navigation } from '../components';
 import { setUserType } from '../store';
+import { me } from '../store'
 
 class Main extends Component {
-
   componentDidMount() {
     this.props.setUserType(this.props.match.url.slice(1));
   }

@@ -6,6 +6,14 @@ import { Snapshot } from '../components';
 import Graphs from './Graphs';
 
 class InstructorDashboard extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidMount() {
+    console.log('PROPS IN INSTRUCTORDASH', this.props)
+  }
+  
   render() {
     return (
       <div>
