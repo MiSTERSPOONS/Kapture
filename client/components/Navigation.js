@@ -17,7 +17,6 @@ const Navigation = (props) => {
           null
       }
       </nav>
-      <hr/>
       {
         props.children
       }
