@@ -13,6 +13,9 @@ class Graphs extends Component {
   componentDidMount() {
     makeHighchart(this.props.emotions)
   }
+  componentWillReceiveProps(nextEmotions) {
+    makeHighchart(nextEmotions.emotions)
+  }
   render() {
     const characteristics = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'neutral', 'sadness', 'surprise', 'createdAt'];
     return (
@@ -25,9 +28,9 @@ class Graphs extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    emotions: state.currentUser.emotions
+    emotions: ownProps.emotions
   }
 }
 

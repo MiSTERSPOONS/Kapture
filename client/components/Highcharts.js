@@ -11,10 +11,9 @@ const normalizeData = (data, type) => {
 }
 
 const makeHighchart = (data) => {
-  console.log('emotions', data)
   Highcharts.chart('container', {
     chart: {
-        type: 'spline',
+        type: 'areaspline',
     },
     title: {
         text: 'Emotions'
@@ -23,11 +22,11 @@ const makeHighchart = (data) => {
         text: 'Emotional score over time'
     },
     xAxis: {
-        type: characteristics[9],
+        type: characteristics[8],
         labels: {
             overflow: 'justify'
         },
-        categories: normalizeData(data, characteristics[9])
+        categories: normalizeData(data, characteristics[8])
     },
     yAxis: {
         title: {
@@ -44,16 +43,8 @@ const makeHighchart = (data) => {
         crosshairs: [true, false]
     },
     plotOptions: {
-        spline: {
-            lineWidth: 2,
-            states: {
-                hover: {
-                    lineWidth: 5
-                }
-            },
-            marker: {
-                enabled: false
-            }
+        areaspline: {
+            fillOpacity: 0.5
         }
     },
     series: [{

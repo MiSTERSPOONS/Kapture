@@ -24,7 +24,7 @@ class StudentDashboard extends Component {
   
       {
         student.emotions &&
-        <Graphs />
+        <Graphs emotions={student.emotions}/>
       }
       </div>
     )

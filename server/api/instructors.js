@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const Instructor = require('../db').model('instructor');
+const Student = require('../db').model('student');
+const Emotion = require('../db').model('emotion');
 module.exports = router;
 
 router.post('/', (req, res, next) => {
@@ -25,7 +27,15 @@ router.post('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   Instructor.findById(req.params.id, {
-    include: [{ all: true }],
+    include: [{ 
+      model: Student,
+      include: [{
+        model: Emotion
+      }], 
+      attributes: { 
+        exclude: ['password', 'salt'] }     
+    }
+  ],
     attributes: { exclude: ['password', 'salt']
   }})
   .then(instructor => res.json(instructor))
