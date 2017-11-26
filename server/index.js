@@ -46,16 +46,16 @@ const createApp = () => {
   passport.deserializeUser((info, done) => {
     console.log('INFO IN DESERIALIZE', info);
     const { userType } = info;
-    const { user } = info;
+    const { userId } = info;
+   
     if (userType === "students") {
-      return db.model('student').findById(Number(user.id))
+      return db.model('student').findById(Number(userId))
       .then(user => {
-        console.log("user in deseriallize call back: ", user);
         return done(null, user)
       })
       .catch(done);
     } else if (userType === 'instructors'){
-      return db.model('instructor').findById(Number(user.id))
+      return db.model('instructor').findById(Number(userId))
       .then(user => done(null, user))
       .catch(done);
     }
