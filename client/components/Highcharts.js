@@ -11,7 +11,6 @@ const normalizeData = (data, type) => {
 }
 
 const makeHighchart = (data) => {
-  console.log('emotions', data)
   Highcharts.chart('container', {
     chart: {
         type: 'areaspline',

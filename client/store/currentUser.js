@@ -17,7 +17,6 @@ const loginUserWithEmailPassword = user => ({ type: LOGIN_USER_WITH_EMAIL_PASSWO
 export const me = () => dispatch => {
   axios.get('/auth/me')
   .then(res => { 
-    console.log('resssssss', res)
     if (res.data) {
       dispatch(setUser(res.data.user))
       history.push(`/${res.data.userType}/${res.data.user.id}`)
@@ -29,7 +28,6 @@ export const me = () => dispatch => {
 export const retrieveUserThunk = (userType, userId) => (dispatch) => {
   axios.get(`/api/${userType}/${userId}`)
     .then((foundUser) => {
-      console.log('foundUser', foundUser)
       dispatch(setUser(foundUser.data));
     })
     .catch(err => console.error(err));
@@ -38,14 +36,11 @@ export const retrieveUserThunk = (userType, userId) => (dispatch) => {
 export const registerUserWithAPI = (imageSrc, userType, userInfo) => (dispatch) => {
   axios.post(`/api/${userType}`, userInfo)
     .then(newUser => {
-      console.log('hitting line 41 of thunk registerwithapi')
       const reqBody = { image: imageSrc, gallery_name: userType, subject_id: newUser.data.id };
       dispatch(setUser(newUser.data));
       return axios.post('/api/kairos/enroll', reqBody)
         .then(response => {
-          console.log('newUser:', newUser)
           history.push(`/${userType}/${newUser.data.id}`)
-          console.log(response);
         })
     })
     .catch(error => console.error(error));
@@ -77,7 +72,6 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
       return info.userId
     })
     .then(userId => {
-      // console.log('HIT currentUser at the End')
       axios.post('/auth/loginFace', { userType, userId })
       .catch(err => console.error(err))
     })
@@ -88,9 +82,7 @@ export const loginEmailPassword = (email, password, userType) => dispatch => {
   let loginInfo = { email, password, userType }
   axios.post('/auth/login', loginInfo)
     .then(foundUser => {
-      console.log('loginEmailPassword Thunk: foundUser =>', foundUser)
       dispatch(loginUserWithEmailPassword(foundUser.data))
-      // history.push(`/${userType}/${foundUser.id}`) 
       history.push(`/${userType}/${foundUser.data.id}`) 
     })
     .catch(err => console.error(err))

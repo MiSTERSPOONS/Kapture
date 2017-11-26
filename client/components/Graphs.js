@@ -11,11 +11,9 @@ class Graphs extends Component {
   }
 
   componentDidMount() {
-    console.log('graph is mounting.....')
     makeHighchart(this.props.emotions)
   }
   componentWillReceiveProps(nextEmotions) {
-    console.log('graph receiving more props.....')
     makeHighchart(nextEmotions.emotions)
   }
   render() {

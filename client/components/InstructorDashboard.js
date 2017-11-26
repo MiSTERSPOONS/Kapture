@@ -15,19 +15,14 @@ class InstructorDashboard extends Component {
   }
 
   componentDidMount() {
-    console.log('PROPS IN INSTRUCTORDASH', this.props)
     this.props.getStudentEmotion(this.props.userType || 'instructors', this.props.match.params.id);
-    // this.props.getAllStudents(this.props.match.params.id)
   }
 
   displayEmotions(event) {
     const studentId = event.target.students.value
-    console.log('this.props.students', this.props)
     const studentArr = this.props.students.filter(student => {
       return student.id == studentId
     })
-    console.log('event.target.students.value:', event.target.students.value)
-    console.log('studentArr', studentArr, studentId)
     const studentEmotion = studentArr[0].emotions
     this.setState({emotions: studentEmotion})
     this.forceUpdate()
@@ -73,7 +68,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log('ownProps: ', ownProps)
   return {
     getStudentEmotion: (type, id) => {
       dispatch(retrieveUserThunk(type, id));

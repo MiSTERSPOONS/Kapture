@@ -7,7 +7,6 @@ const api = require('../../secrets')
 module.exports = router
 
 router.post('/recognize', (req, res, next) => {
-  console.log('HITTING POST REQUEST TO MICROSOFT')
   axios.post('https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize', { "url": req.body.info.imageURL }, {
     headers: {
       'Content-type': "application/json",

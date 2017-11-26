@@ -39,12 +39,10 @@ const createApp = () => {
   }));
 
   passport.serializeUser((info, done) => {
-    console.log('User from serializeUser function: ', info);
     return done(null, info)
   });
 
   passport.deserializeUser((info, done) => {
-    console.log('INFO IN DESERIALIZE', info);
     const { userType } = info;
     const { userId } = info;
    
