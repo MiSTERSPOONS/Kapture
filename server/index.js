@@ -38,14 +38,29 @@ const createApp = () => {
     saveUninitialized: false,
   }));
 
-  passport.serializeUser((user, done) => {
-    console.log('user', user)
-    done(null, user.id)}
-  );
-  passport.deserializeUser((id, done) =>
-    db.model('instructor').findById(id)
+  passport.serializeUser((info, done) => {
+    console.log('User from serializeUser function: ', info);
+    return done(null, info)
+  });
+
+  passport.deserializeUser((info, done) => {
+    console.log('INFO IN DESERIALIZE', info);
+    const { userType } = info;
+    const { user } = info;
+    if (userType === "students") {
+      return db.model('student').findById(Number(user.id))
+      .then(user => {
+        console.log("user in deseriallize call back: ", user);
+        return done(null, user)
+      })
+      .catch(done);
+    } else if (userType === 'instructors'){
+      return db.model('instructor').findById(Number(user.id))
       .then(user => done(null, user))
-      .catch(done));
+      .catch(done);
+    }
+  });
+  
 
   app.use(passport.initialize());
   app.use(passport.session());

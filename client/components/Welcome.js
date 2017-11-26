@@ -1,8 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const Welcome = () => {
-  return (
+import { me } from '../store';
+
+class Welcome extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidMount() {
+    this.props.getMe()
+  }
+
+  render() {
+    return (
       <div className="center" id="welcome-container">
         <img src="/images/logo.png" />
         <div>
@@ -14,7 +26,20 @@ const Welcome = () => {
           </div>
         </div>
       </div>
-  )
+    )
+  }
 }
 
-export default Welcome;
+const mapStateToProps = state => {
+  return {}
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getMe: () => {
+      dispatch(me())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome);

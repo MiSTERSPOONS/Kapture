@@ -5,13 +5,26 @@ import history from '../history';
 
 const RETRIEVE_USER = 'RETRIEVE_USER';
 const REMOVE_USER = 'REMOVE_USER';
+const LOGIN_USER_WITH_EMAIL_PASSWORD = 'LOGIN_USER_WITH_EMAIL_PASSWORD'
 
 // Action Creators
 
 export const setUser = user => ({ type: RETRIEVE_USER, user });
 const removeUser = () => ({ type: REMOVE_USER })
+const loginUserWithEmailPassword = user => ({ type: LOGIN_USER_WITH_EMAIL_PASSWORD, user })
 
 // THUNK
+export const me = () => dispatch => {
+  axios.get('/auth/me')
+  .then(res => { 
+    console.log('resssssss', res)
+    if (res.data) {
+      dispatch(setUser(res.data.user))
+      history.push(`/${res.data.userType}/${res.data.user.id}`)
+    }
+  })
+  .catch(err => console.error(err))
+}
 
 export const retrieveUserThunk = (userType, userId) => (dispatch) => {
   axios.get(`/api/${userType}/${userId}`)
@@ -67,13 +80,25 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
     .catch(error => console.error(error));
 };
 
+export const loginEmailPassword = (email, password, userType) => dispatch => {
+  let loginInfo = { email, password, userType }
+  axios.post('/auth/login', loginInfo)
+    .then(foundUser => {
+      console.log('loginEmailPassword Thunk: foundUser =>', foundUser)
+      dispatch(loginUserWithEmailPassword(foundUser.data))
+      // history.push(`/${userType}/${foundUser.id}`) 
+      history.push(`/${userType}/${foundUser.data.id}`) 
+    })
+    .catch(err => console.error(err))
+}
+
 export const logout = () => dispatch => {
     axios.post('/auth/logout')
       .then(_ => {
         dispatch(removeUser())
         history.push('/')
       })
-      .catch(err => console.log(err))
+      .catch(err => console.error(err))
 }
 
 export default (state = {}, action) => {
@@ -82,6 +107,8 @@ export default (state = {}, action) => {
       return action.user;
     case REMOVE_USER:
       return {}
+    case LOGIN_USER_WITH_EMAIL_PASSWORD:
+      return action.user
     default:
       return state;
   }
