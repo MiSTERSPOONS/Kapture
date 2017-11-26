@@ -32,6 +32,18 @@ router.get('/:id', (req, res, next) => {
     .catch(next);
 });
 
+// router.get('/allStudents/:instructorId', (req, res, next) => {
+//   Student.findAll({
+//     where: {
+//       instructorId: req.params.instructorId
+//     }
+//   })
+//   .then(students => {
+//     console.log('students in student/allstudennt api route', students)
+//     res.json(students)
+//   })
+// })
+
 // router.post('/', (req, res, next) => {
 //   Student.findOrCreate({
 //     where: req.body
