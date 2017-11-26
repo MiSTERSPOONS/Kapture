@@ -38,10 +38,12 @@ export const retrieveUserThunk = (userType, userId) => (dispatch) => {
 export const registerUserWithAPI = (imageSrc, userType, userInfo) => (dispatch) => {
   axios.post(`/api/${userType}`, userInfo)
     .then(newUser => {
+      console.log('hitting line 41 of thunk registerwithapi')
       const reqBody = { image: imageSrc, gallery_name: userType, subject_id: newUser.data.id };
       dispatch(setUser(newUser.data));
       return axios.post('/api/kairos/enroll', reqBody)
         .then(response => {
+          console.log('newUser:', newUser)
           history.push(`/${userType}/${newUser.data.id}`)
           console.log(response);
         })

@@ -4,6 +4,7 @@ const Student = require('../db').model('student');
 module.exports = router;
 
 router.post('/', (req, res, next) => {
+  console.log('hitting student post signup......')
   Student.create(req.body)
     .then((student) => {
       const currentStudent = {
@@ -12,7 +13,7 @@ router.post('/', (req, res, next) => {
         lastName: student.lastName,
         email: student.email,
       };
-      req.login(student, err => (err ? next(err) : res.json(currentStudent)));
+      req.login({userType: 'students', user: student}, err => (err ? next(err) : res.json(currentStudent)));
     })
     .catch((err) => {
       if (err.name === 'SequelizeUniqueConstraintError') {
