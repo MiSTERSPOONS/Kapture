@@ -4,7 +4,6 @@ const Student = require('../db').model('student');
 module.exports = router;
 
 router.post('/', (req, res, next) => {
-  console.log('hitting student post signup......')
   Student.create(req.body)
     .then((student) => {
       const currentStudent = {

@@ -11,7 +11,7 @@ router.post('/', (req, res, next) => {
         lastName: instructor.lastName,
         email: instructor.email,
       };
-      req.login(instructor, err => (err ? next(err) : res.json(currentInstructor)));
+      req.login({userType: 'instructors', user: instructor}, err => (err ? next(err) : res.json(currentInstructor)));
     })
     .catch((err) => {
       if (err.name === 'SequelizeUniqueConstraintError') {

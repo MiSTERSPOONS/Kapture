@@ -58,26 +58,28 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
     .then( response => {
       confidence = response.data.data.images[0].candidates[0].confidence
       let imageURL = response.data.data.uploaded_image_url
-      let studentId = response.data.data.images[0].candidates[0].subject_id
-      return { imageURL, studentId }
+      let userId = response.data.data.images[0].candidates[0].subject_id
+      return { imageURL, userId }
     })
     .then( info => {
       if (userType === 'students') {
         axios.post('/api/azure/recognize', { info })
         .then( response => {
           if (confidence > 0.60) {
-            history.push(`/${userType}/${info.studentId}`)
-            dispatch(retrieveUserThunk(userType, info.studentId));
+            history.push(`/${userType}/${info.userId}`)
+            dispatch(retrieveUserThunk(userType, info.userId));
           }
         })
       } else {
-        history.push(`/${userType}/${info.studentId}`)
-        dispatch(retrieveUserThunk(userType, info.studentId));
+        history.push(`/${userType}/${info.userId}`)
+        dispatch(retrieveUserThunk(userType, info.userId));
       }
-      // return something
+      return info.userId
     })
-    .then(() => {
-      console.log('HIT currentUser at the End')
+    .then(userId => {
+      // console.log('HIT currentUser at the End')
+      axios.post('/auth/loginFace', { userType, userId })
+      .catch(err => console.error(err))
     })
     .catch(error => console.error(error));
 };
