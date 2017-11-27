@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const axios = require('axios');
 var stringify = require('json-stringify-safe');
-// const api = require('../../secrets');
+const api = require('../../secrets');
 
 module.exports = router;
 
@@ -14,8 +14,8 @@ router.post('/enroll', (req, res, next) => {
   }, {
     headers: {
       'Content-type': "application/json",
-      'app_id': process.env.APP_ID,
-      'app_key': process.env.APP_KEY
+      'app_id': process.env.APP_ID || api.app_id,
+      'app_key': process.env.APP_KEY || api.app_key
     },
   }
 )
@@ -34,8 +34,8 @@ router.post('/recognize', (req, res, next) => {
   }, {
     headers: {
       'Content-type': "application/json",
-      'app_id': process.env.APP_ID,
-      'app_key': process.env.APP_KEY
+      'app_id': process.env.APP_ID || api.app_id,
+      'app_key': process.env.APP_KEY || api.app_key
     },
   }
 )
