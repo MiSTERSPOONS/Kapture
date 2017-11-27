@@ -6,6 +6,7 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const passport = require('passport');
 const db = require('./db');
+const socketio = require('socket.io');
 
 const sessionStore = new SequelizeStore({ db });
 const PORT = process.env.PORT || 8080;
@@ -98,6 +99,24 @@ const createApp = () => {
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
   const server = app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`));
+  const io = socketio(server);
+  io.on('connection', (socket) => {
+    console.log('made socket connect on server side ', socket.id)
+
+    socket.on('kaptureImage', () => {
+      console.log('Hears the kaptureImage on server/index')
+      io.emit('kaptureImage')
+    })
+
+    socket.on('doneKapturing', () => {
+      console.log('Done Kapturing the image')
+      io.emit('doneKapturing')
+    })
+
+    socket.on('disconnect', () => {
+      console.log('socket disconnect on server side ', socket.id)
+    })
+  })
 };
 
 const syncDb = () => db.sync({ force: false });

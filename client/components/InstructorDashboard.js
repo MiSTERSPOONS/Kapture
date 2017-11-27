@@ -5,17 +5,29 @@ import { retrieveUserThunk } from '../store';
 import { Snapshot } from '../components';
 import Graphs from './Graphs';
 
+import socket from '../socket'
+
 class InstructorDashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      emotions: null
+      emotions: null,
     }
     this.displayEmotions = this.displayEmotions.bind(this)
+    this.kaptureClassEmotion = this.kaptureClassEmotion.bind(this)
   }
 
   componentDidMount() {
     this.props.getStudentEmotion(this.props.userType || 'instructors', this.props.match.params.id);
+    socket.on('doneKapturing', () => {
+      console.log('back to the INstructor Dash')
+      this.props.getStudentEmotion(this.props.userType || 'instructors', this.props.match.params.id)
+    })
+  }
+
+  kaptureClassEmotion() {
+    console.log('emitting kaptureImage from Instructor Dashboard!')
+    socket.emit('kaptureImage')
   }
 
   displayEmotions(event) {
@@ -31,7 +43,7 @@ class InstructorDashboard extends Component {
   render() {
     return (
       <div>
-        <button>Kapture Class Emotions
+        <button onClick={this.kaptureClassEmotion}>Kapture Class Emotions
         </button>
         <form onSubmit={(event) => {
           event.preventDefault()
