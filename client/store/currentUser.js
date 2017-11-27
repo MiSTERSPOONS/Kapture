@@ -62,17 +62,18 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
         .then( response => {
           if (confidence > 0.60) {
             history.push(`/${userType}/${info.userId}`)
-            dispatch(retrieveUserThunk(userType, info.userId));
           }
         })
       } else {
         history.push(`/${userType}/${info.userId}`)
-        dispatch(retrieveUserThunk(userType, info.userId));
       }
       return info.userId
     })
     .then(userId => {
       axios.post('/auth/loginFace', { userType, userId })
+      .then(() => {
+        dispatch(retrieveUserThunk(userType, userId));
+      })
       .catch(err => console.error(err))
     })
     .catch(error => console.error(error));

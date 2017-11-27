@@ -5,6 +5,7 @@ import { retrieveUserThunk } from '../store';
 import { Snapshot } from '../components';
 import Graphs from './Graphs';
 
+import socket from '../socket';
 
 class StudentDashboard extends Component {
   constructor(props) {
@@ -21,7 +22,6 @@ class StudentDashboard extends Component {
       <div>
       <Snapshot display="none" />
       <h1>Hello, {student.firstName}!</h1>
-  
       {
         student.emotions &&
         <Graphs emotions={student.emotions}/>
