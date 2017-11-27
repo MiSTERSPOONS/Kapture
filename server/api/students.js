@@ -1,16 +1,21 @@
 const router = require('express').Router();
 const Student = require('../db').model('student');
+const Instructor = require('../db').model('instructor');
 
 module.exports = router;
 
 router.post('/', (req, res, next) => {
   Student.create(req.body)
     .then((student) => {
+      Instructor.findById(1)
+      .then( instructor => {
+        student.addInstructor(instructor);
+      })
       const currentStudent = {
         id: student.id,
         firstName: student.firstName,
         lastName: student.lastName,
-        email: student.email,
+        email: student.email
       };
       req.login({userType: 'students', userId: student.id}, err => (err ? next(err) : res.json(currentStudent)));
     })
