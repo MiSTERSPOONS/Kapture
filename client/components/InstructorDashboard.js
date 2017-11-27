@@ -20,25 +20,24 @@ class InstructorDashboard extends Component {
   componentDidMount() {
     this.props.getStudentEmotion(this.props.userType || 'instructors', this.props.match.params.id);
     socket.on('doneKapturing', () => {
-      console.log('back to the INstructor Dash')
       this.props.getStudentEmotion(this.props.userType || 'instructors', this.props.match.params.id)
-      
+      let id = document.getElementById('students').value
+      this.displayEmotions(id)
     })
   }
 
   kaptureClassEmotion() {
-    console.log('emitting kaptureImage from Instructor Dashboard!')
     socket.emit('kaptureImage')
   }
 
-  displayEmotions(event) {
-    const studentId = event.target.students.value
+  displayEmotions(id) {
+    // const studentId = event.target.students.value
     const studentArr = this.props.students.filter(student => {
-      return student.id == studentId
+      return student.id == id
     })
     const studentEmotion = studentArr[0].emotions
     this.setState({emotions: studentEmotion})
-    this.forceUpdate()
+    // this.forceUpdate()
   }
   
   render() {
@@ -46,10 +45,10 @@ class InstructorDashboard extends Component {
       <div>
         <button onClick={this.kaptureClassEmotion}>Kapture Class Emotions
         </button>
-        <form onSubmit={(event) => {
+        <form ref="refForm" onSubmit={(event) => {
           event.preventDefault()
-          this.displayEmotions(event)}}>
-        <select name='students'>
+          this.displayEmotions(event.target.students.value)}}>
+        <select name='students' id='students'>
           {
             this.props.students && this.props.students.map(student => {
               return (

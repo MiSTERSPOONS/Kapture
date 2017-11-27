@@ -3,22 +3,16 @@ import { connect } from 'react-redux';
 import makeHighchart from './Highcharts';
 import socket from '../socket';
 
-
-
-
 class Graphs extends Component {
   constructor(props) {
     super(props)
   }
 
   componentDidMount() {
-    console.log('graph is mounting......')
     makeHighchart(this.props.emotions)
   }
   componentWillReceiveProps(nextEmotions) {
-    console.log('graph receiving next props.......')
     makeHighchart(nextEmotions.emotions)
-    console.log('emitting doneKapturing from graphs')
     socket.emit('doneKapturing')
   }
   render() {

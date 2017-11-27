@@ -4,21 +4,6 @@ import { withRouter } from 'react-router-dom';
 import store, { setSnapshotType, registerUserWithAPI, loginUserWithAPI } from '../store';
 import socket from '../socket'
 
-// const kapture = (sendCapture, userType, currentUser, snapshotType) => {
-//   const video = document.getElementById('video');
-//   const canvas = document.getElementById('canvas');
-//   let context = canvas.getContext('2d');
-//   context.drawImage(video, 0, 0, 320, 240); // Taking photo
-//   const imageBase64 = canvas.toDataURL(); // Base64
-//   sendCapture(
-//     imageBase64,
-//     userType || 'students',
-//     currentUser || null,
-//     snapshotType || 'login'
-//   )
-// }
-
-
 class Snapshot extends Component {
   constructor(props) {
     super(props);
@@ -27,20 +12,7 @@ class Snapshot extends Component {
   
   componentDidMount() {
     socket.on('kaptureImage', () => {
-      console.log('hitting from Snapshot after all that shit')
-      return new Promise((resolve, reject) => {
-        try {
-          this.capture()
-          console.log('this should fire before worked')
-          resolve('SUCCESS')
-        } catch(e) {
-          reject(e) 
-        }
-      })
-      .then(() => {
-        // socket.emit('doneKapturing')
-        console.log('workeddddddd')
-      })
+      this.capture()
     }) 
     const videoBox = document.getElementById('video');
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -55,9 +27,7 @@ class Snapshot extends Component {
   capture() {
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
-    console.log('this is the canvas ', canvas)
     let context = canvas.getContext('2d');
-    console.log('this is the context' , context)
     context.drawImage(video, 0, 0, 320, 240); // Taking photo
     const imageBase64 = canvas.toDataURL(); // Base64
     this.props.sendCapture(
@@ -67,34 +37,13 @@ class Snapshot extends Component {
       this.props.snapshotType || 'login'
     )
   }
-  
-  // captureInterval() {
-    //   var video = document.getElementById('video');
-    //   var canvas = document.getElementById('canvas');
-    //   var context = canvas.getContext('2d');
-    //   context.drawImage(video, 0, 0, 320, 240); // Taking photo
-    //   var imageBase64 = canvas.toDataURL(); // Base64
-    
-    //   const kaptureTimer = () => {
-      //     context.drawImage(video, 0, 0, 320, 240);
-      //     console.log(canvas.toDataURL().slice(0, 30));
-      //   }
-      //   setInterval(kaptureTimer, this.props.interval);
-      
-      //   this.props.sendCapture(
-        //     imageBase64,
-        //     this.props.userType || 'students',
-        //     this.props.currentUser.id,
-        //     this.props.setSnapshotType || 'login'
-        //   )
-        // }
         
-        render() {
-          return (
-            <div id="snapshot-container">
-            <div className="center">
-            <video id="video" width="640" height="480" autoPlay style={{ display: this.props.display }} />
-            </div>
+  render() {
+    return (
+      <div id="snapshot-container">
+        <div className="center">
+          <video id="video" width="640" height="480" autoPlay style={{ display: this.props.display }} />
+        </div>
         <div className="center">
           <button className="kapture-button" id="snap" onClick={this.capture}>Kapture Myself</button>
         </div>
@@ -127,3 +76,24 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Snapshot));
+
+// captureInterval() {
+    //   var video = document.getElementById('video');
+    //   var canvas = document.getElementById('canvas');
+    //   var context = canvas.getContext('2d');
+    //   context.drawImage(video, 0, 0, 320, 240); // Taking photo
+    //   var imageBase64 = canvas.toDataURL(); // Base64
+    
+    //   const kaptureTimer = () => {
+      //     context.drawImage(video, 0, 0, 320, 240);
+      //     console.log(canvas.toDataURL().slice(0, 30));
+      //   }
+      //   setInterval(kaptureTimer, this.props.interval);
+      
+      //   this.props.sendCapture(
+        //     imageBase64,
+        //     this.props.userType || 'students',
+        //     this.props.currentUser.id,
+        //     this.props.setSnapshotType || 'login'
+        //   )
+        // }

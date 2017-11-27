@@ -61,23 +61,18 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
         axios.post('/api/azure/recognize', { info })
         .then( response => {
           if (confidence > 0.60) {
-            console.log('aabout to hit history.push => #1')
             history.push(`/${userType}/${info.userId}`)
-            // dispatch(retrieveUserThunk(userType, info.userId));
           }
         })
       } else {
         history.push(`/${userType}/${info.userId}`)
-        // dispatch(retrieveUserThunk(userType, info.userId));
       }
       return info.userId
     })
     .then(userId => {
       axios.post('/auth/loginFace', { userType, userId })
       .then(() => {
-        console.log('dispatching retrieveUserThunk after loginUserWithApi')
         dispatch(retrieveUserThunk(userType, userId));
-
       })
       .catch(err => console.error(err))
     })

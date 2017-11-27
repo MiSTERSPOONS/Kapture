@@ -104,12 +104,10 @@ const startListening = () => {
     console.log('made socket connect on server side ', socket.id)
 
     socket.on('kaptureImage', () => {
-      console.log('Hears the kaptureImage on server/index')
       socket.broadcast.emit('kaptureImage')
     })
 
     socket.on('doneKapturing', () => {
-      console.log('Done Kapturing the image')
       socket.broadcast.emit('doneKapturing')
     })
 
