@@ -74,6 +74,11 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
     })
     .then(userId => {
       axios.post('/auth/loginFace', { userType, userId })
+      .then(() => {
+        console.log('dispatching retrieveUserThunk after loginUserWithApi')
+        dispatch(retrieveUserThunk(userType, userId));
+
+      })
       .catch(err => console.error(err))
     })
     .catch(error => console.error(error));

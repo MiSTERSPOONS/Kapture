@@ -22,6 +22,7 @@ class InstructorDashboard extends Component {
     socket.on('doneKapturing', () => {
       console.log('back to the INstructor Dash')
       this.props.getStudentEmotion(this.props.userType || 'instructors', this.props.match.params.id)
+      
     })
   }
 
@@ -57,7 +58,7 @@ class InstructorDashboard extends Component {
             })
           }
         </select>
-        <button type='submit'>
+        <button id="renderGraph" type='submit'>
           Chart Emotions
         </button>
         </form>

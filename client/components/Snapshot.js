@@ -27,38 +27,21 @@ class Snapshot extends Component {
   
   componentDidMount() {
     socket.on('kaptureImage', () => {
-      // console.log('hitting from Snapshot after all that shit')
-      // return new Promise((resolve, reject) => {
-      //   try {
-      //     this.capture()
-      //     console.log('this should fire before worked')
-      //     resolve('SUCCESS')
-      //   } catch(e) {
-      //     reject(e) 
-      //   }
-      // })
-      // .then(() => {
-      //   socket.emit('doneKapturing')
-      //   console.log('workeddddddd')
-      // })
-      const that = this;
-      
-      const asyncFunc = async function promise() {
+      console.log('hitting from Snapshot after all that shit')
+      return new Promise((resolve, reject) => {
         try {
-          await that.interval = setTimeout(() => {
-            console.log("Hi I am here");
-          }, 3000);
-          console.log("are you waiting");
+          this.capture()
+          console.log('this should fire before worked')
+          resolve('SUCCESS')
         } catch(e) {
-          throw new Error("Something is wrong");
+          reject(e) 
         }
-      }
-      asyncFunc()
-      .then(() => {
-        console.log('hitting socket.emit after async')
-        socket.emit('doneKapturing')
       })
-    })
+      .then(() => {
+        // socket.emit('doneKapturing')
+        console.log('workeddddddd')
+      })
+    }) 
     const videoBox = document.getElementById('video');
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
@@ -68,14 +51,13 @@ class Snapshot extends Component {
     }
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.interval);
-  }
   
   capture() {
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
+    console.log('this is the canvas ', canvas)
     let context = canvas.getContext('2d');
+    console.log('this is the context' , context)
     context.drawImage(video, 0, 0, 320, 240); // Taking photo
     const imageBase64 = canvas.toDataURL(); // Base64
     this.props.sendCapture(

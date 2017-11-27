@@ -105,12 +105,12 @@ const startListening = () => {
 
     socket.on('kaptureImage', () => {
       console.log('Hears the kaptureImage on server/index')
-      io.emit('kaptureImage')
+      socket.broadcast.emit('kaptureImage')
     })
 
     socket.on('doneKapturing', () => {
       console.log('Done Kapturing the image')
-      io.emit('doneKapturing')
+      socket.broadcast.emit('doneKapturing')
     })
 
     socket.on('disconnect', () => {
