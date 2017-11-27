@@ -27,13 +27,15 @@ router.post('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   Instructor.findById(req.params.id, {
-    include: [{ 
+    include: [{
       model: Student,
-      include: [{
-        model: Emotion
-      }], 
-      attributes: { 
-        exclude: ['password', 'salt'] }     
+      include: [Emotion],
+      order: [
+        ['id', 'ASC']
+      ],
+      attributes: {
+        exclude: ['password', 'salt']
+      }
     }
   ],
     attributes: { exclude: ['password', 'salt']

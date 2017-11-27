@@ -13,6 +13,7 @@ class Graphs extends Component {
   }
   componentWillReceiveProps(nextEmotions) {
     makeHighchart(nextEmotions.emotions)
+    console.log(nextEmotions.emotions);
     socket.emit('doneKapturing')
   }
   render() {

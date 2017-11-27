@@ -11,18 +11,17 @@ class InstructorDashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      emotions: null,
+      studentId: null,
     }
     this.displayEmotions = this.displayEmotions.bind(this)
     this.kaptureClassEmotion = this.kaptureClassEmotion.bind(this)
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
     this.props.getStudentEmotion(this.props.userType || 'instructors', this.props.match.params.id);
     socket.on('doneKapturing', () => {
       this.props.getStudentEmotion(this.props.userType || 'instructors', this.props.match.params.id)
-      let id = document.getElementById('students').value
-      this.displayEmotions(id)
     })
   }
 
@@ -30,25 +29,26 @@ class InstructorDashboard extends Component {
     socket.emit('kaptureImage')
   }
 
-  displayEmotions(id) {
-    // const studentId = event.target.students.value
+  displayEmotions() {
     const studentArr = this.props.students.filter(student => {
-      return student.id == id
+      return student.id === Number(this.state.studentId);
     })
-    const studentEmotion = studentArr[0].emotions
-    this.setState({emotions: studentEmotion})
-    // this.forceUpdate()
+    const studentEmotion = studentArr[0].emotions;
+    return studentEmotion;
   }
-  
+
+  handleChange(event) {
+    const studentId = event.target.value;
+    this.setState({ studentId });
+  }
+
   render() {
     return (
       <div>
         <button onClick={this.kaptureClassEmotion}>Kapture Class Emotions
         </button>
-        <form ref="refForm" onSubmit={(event) => {
-          event.preventDefault()
-          this.displayEmotions(event.target.students.value)}}>
-        <select name='students' id='students'>
+        <select onChange={this.handleChange}>
+          <option>Select a Student</option>
           {
             this.props.students && this.props.students.map(student => {
               return (
@@ -57,13 +57,9 @@ class InstructorDashboard extends Component {
             })
           }
         </select>
-        <button id="renderGraph" type='submit'>
-          Chart Emotions
-        </button>
-        </form>
         {
-          this.state.emotions ?
-          <Graphs emotions={this.state.emotions} /> :
+          this.state.studentId ?
+          <Graphs emotions={this.displayEmotions()} /> :
           null
         }
       </div>
