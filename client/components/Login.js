@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   submitBoringLogin: (event, userType) => {
     event.preventDefault();
-    const email = event.target.email.value;
+    const email = event.target.email.value.toLowerCase();
     const password = event.target.password.value;
     dispatch(loginEmailPassword(email, password, userType))
   }

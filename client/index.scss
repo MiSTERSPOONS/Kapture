@@ -9,6 +9,25 @@ body {
   display: none;
 }
 
+.yellow {
+  background-color: gold;
+}
+.crimson {
+  background-color: crimson;
+}
+.orange {
+  background-color: #F77F00;
+}
+
+#toast-container {
+  padding: 20px;
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  width: 400px;
+  text-align: center;
+}
+
 #welcome-container {
   padding-top: 10vh;
   height: 90vh;
