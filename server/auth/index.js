@@ -18,18 +18,24 @@ router.get('/me', (req, res, next) => {
 })
 
 router.post('/login', (req, res, next) => {
+  console.log(req.body);
   const email = req.body.email
   const password = req.body.password
   const userType = req.body.userType
   if (userType === 'students') {
 
     Student.findOne({
-      where: { email },
-      attributes: { exclude: ['password', 'salt'] }
+      where: { email }
     })
       .then(foundStudent => {
         if (foundStudent.correctPassword(password)) {
-          req.login({ userType, userId: foundStudent.id }, err => (err ? next(err) : res.json(foundStudent)));
+          const currentStudent = {
+            id: foundStudent.id,
+            firstName: foundStudent.firstName,
+            lastName: foundStudent.lastName,
+            email: foundStudent.email
+          };
+          req.login({ userType, userId: foundStudent.id }, err => (err ? next(err) : res.json(currentStudent)));
         } else {
           console.log('Email or Password is Incorrect')
         }
@@ -37,11 +43,16 @@ router.post('/login', (req, res, next) => {
   } else if (userType === 'instructors') {
     Instructor.findOne({
       where: { email },
-      attributes: { exclude: ['password', 'salt'] },
     })
       .then(foundInstructor => {
         if (foundInstructor.correctPassword(password)) {
-          req.login({ userType, userId: foundInstructor.id }, err => (err ? next(err) : res.json(foundInstructor)));
+          const currentStudent = {
+            id: foundInstructor.id,
+            firstName: foundInstructor.firstName,
+            lastName: foundInstructor.lastName,
+            email: foundInstructor.email
+          };
+          req.login({ userType, userId: foundInstructor.id }, err => (err ? next(err) : res.json(currentStudent)));
         } else {
           console.log('Email or Password is Incorrect')
         }
