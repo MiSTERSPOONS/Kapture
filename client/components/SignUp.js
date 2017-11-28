@@ -21,7 +21,7 @@ const SignUp = (props) => {
         </div>
         <div>
           <label>Email:
-            <input className="form-control" type="text" name="email" required="required" />
+            <input className="form-control" type="email" name="email" required="required" />
           </label>
         </div>
         <div>

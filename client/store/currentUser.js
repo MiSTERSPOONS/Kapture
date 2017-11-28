@@ -78,7 +78,14 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
       axios.post('/auth/loginFace', { userType, userId })
       .catch(err => console.error(err))
     })
-    .catch(error => console.error(error));
+    .catch(error => {
+      dispatch(setToast({
+        errorType: 'Login Error',
+        message: 'Unable to Kapture/verify face.',
+        color: 'orange'
+      }));
+      console.error(error);
+    });
 };
 
 export const loginEmailPassword = (email, password, userType) => dispatch => {
