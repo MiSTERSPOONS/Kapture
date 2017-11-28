@@ -1,5 +1,6 @@
 import axios from 'axios';
 import history from '../history';
+import { setToast } from './toast';
 
 // Action Type
 
@@ -77,15 +78,27 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
       axios.post('/auth/loginFace', { userType, userId })
       .catch(err => console.error(err))
     })
-    .catch(error => console.error(error));
+    .catch(error => {
+      dispatch(setToast({
+        errorType: 'Login Error',
+        message: 'Unable to Kapture/verify face.',
+        color: 'orange'
+      }));
+      console.error(error)
+    });
 };
 
 export const loginEmailPassword = (email, password, userType) => dispatch => {
   let loginInfo = { email, password, userType }
   axios.post('/auth/login', loginInfo)
     .then(foundUser => {
-      dispatch(loginUserWithEmailPassword(foundUser.data))
-      history.push(`/${userType}/${foundUser.data.id}`)
+      if (foundUser.data.errorType) {
+        dispatch(setToast(foundUser.data));
+      } else {
+        dispatch(setToast({}));
+        dispatch(loginUserWithEmailPassword(foundUser.data))
+        history.push(`/${userType}/${foundUser.data.id}`)
+      }
     })
     .catch(err => console.error(err))
 }

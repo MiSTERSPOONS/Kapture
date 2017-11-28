@@ -6,14 +6,16 @@ import history from '../history';
 import { loginEmailPassword } from '../store'
 
 const Login = (props) => (
-  <div>
-    <h1>Login</h1>
-    <button onClick={props.loginWithFace} className="btn btn-success">Login with Face</button>
-    <p onClick={props.showLoginForm}>Login like a boring person</p>
+  <div id="login-container">
+    <h1 className="center">Login</h1>
+    <div className="login-buttons">
+      <button onClick={props.loginWithFace} className="kapture-button">Login with Face</button>
+      <button onClick={props.showLoginForm} className="kapture-button email-login-button">Login With Email</button>
+    </div>
     <form id="login-form" onSubmit={(event) => props.submitBoringLogin(event, props.userType)}>
       <div>
         <label>Email:
-              <input className="form-control" type="text" name="email" required="required" />
+              <input className="form-control" type="email" name="email" required="required" />
         </label>
       </div>
       <div>
@@ -21,7 +23,7 @@ const Login = (props) => (
               <input className="form-control" type="password" name="password" required="required" />
         </label>
       </div>
-      <button type="submit">Login
+      <button className="kapture-button" type="submit">Login
       </button>
     </form>
   </div>
@@ -42,7 +44,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   submitBoringLogin: (event, userType) => {
     event.preventDefault();
-    const email = event.target.email.value;
+    const email = event.target.email.value.toLowerCase();
     const password = event.target.password.value;
     dispatch(loginEmailPassword(email, password, userType))
   }

@@ -4,13 +4,14 @@ import { Router } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import history from './history';
 
-import { Welcome, Main, Snapshot, StudentDashboard, InstructorDashboard, Navigation } from './components';
+import { Welcome, Main, Snapshot, StudentDashboard, InstructorDashboard, Navigation, Toast } from './components';
 
 export default class Routes extends Component {
   render() {
     return (
       <Router history={history}>
         <Navigation>
+          <Toast />
           <Switch>
               <Route exact path="/" component={Welcome} />
               <Route exact path="/students" component={Main} />
