@@ -1,4 +1,5 @@
 $primary-color: #5B33C8;
+$secondary-color: #8D6B94;
 
 body {
   font-family: 'Raleway', sans-serif;
@@ -18,6 +19,25 @@ body {
 div[id^="container"] {
   width: 50%;
   height: 300px;
+}
+  
+.yellow {
+  background-color: gold;
+}
+.crimson {
+  background-color: crimson;
+}
+.orange {
+  background-color: #F77F00;
+}
+
+#toast-container {
+  padding: 20px;
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  width: 400px;
+  text-align: center;
 }
 
 #welcome-container {
@@ -49,23 +69,32 @@ div[id^="container"] {
 
 #main-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   #login-form {
     margin-top: 20px;
     display: none;
   }
 }
 
-#snapshot-container {
+#login-container, #signup-container {
+  margin: 8%;
+}
+
+#snapshot-container, #login-container, #signup-container {
   #video {
     border: 3px solid $primary-color;
     width: 640px;
     height: 480px;
   }
+  .login-buttons {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+  }
   .kapture-button {
     transition: background-color 0.3s ease;
     font-size: 18px;
-    margin: 20px;
+    margin: 10px;
     border-radius: 0px;
     padding: 10px;
     border: 1px solid black;
@@ -75,6 +104,12 @@ div[id^="container"] {
     &:hover {
       background-color: white;
       color: $primary-color;
+    }
+  }
+  .email-login-button {
+    background-color: $secondary-color;
+    &:hover {
+      color: $secondary-color;
     }
   }
 }

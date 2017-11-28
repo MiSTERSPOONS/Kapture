@@ -41,5 +41,5 @@ const mapDispatchToProps = dispatch => {
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navigation));
 
 Navigation.propTypes = {
-  children: PropTypes.object
+  children: PropTypes.array
 }

@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setUser, setSnapshotType } from '../store';
+import { setUser, setSnapshotType, setToast } from '../store';
 import { withRouter } from 'react-router-dom';
 import history from '../history';
 
 const SignUp = (props) => {
   return (
-    <div>
+    <div id="signup-container">
       <form onSubmit={(event) => props.handleSubmit(event)}>
         <h1>Sign Up!</h1>
         <div>
@@ -21,7 +21,7 @@ const SignUp = (props) => {
         </div>
         <div>
           <label>Email:
-            <input className="form-control" type="text" name="email" required="required" />
+            <input className="form-control" type="email" name="email" required="required" />
           </label>
         </div>
         <div>
@@ -34,7 +34,7 @@ const SignUp = (props) => {
             <input className="form-control" type="password" name="confirmPass" required="required" />
           </label>
         </div>
-        <button className="btn btn-success">Kapture Myself</button>
+        <button className="kapture-button">Kapture Myself</button>
       </form>
     </div>
   )
@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch) => {
       const userInfo = {
         firstName: event.target.first.value,
         lastName: event.target.last.value,
-        email: event.target.email.value,
+        email: event.target.email.value.toLowerCase(),
         password: event.target.password.value,
       }
       if (event.target.confirmPass.value === userInfo.password) {
@@ -68,7 +68,11 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(setSnapshotType('signup'));
         history.push('/snapshot');
       } else {
-        alert('Passwords do not Match')
+        dispatch(setToast({
+          errorType: 'Sign Up',
+          message: 'Passwords do not Match',
+          color: 'yellow'
+        }))
       }
     }
   }
