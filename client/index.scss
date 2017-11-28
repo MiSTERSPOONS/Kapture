@@ -15,7 +15,10 @@ body {
   flex-wrap: wrap;
 }
 
-
+div[id^="container"] {
+  width: 50%;
+  height: 300px;
+}
 
 #welcome-container {
   padding-top: 10vh;

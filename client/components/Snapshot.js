@@ -39,7 +39,6 @@ class Snapshot extends Component {
   }
         
   render() {
-    console.log('this.props.path: ', this.props.path)
     return (
       <div id="snapshot-container">
         <div className="center">
