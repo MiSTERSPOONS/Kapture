@@ -6,10 +6,14 @@ module.exports = router
 router.get('/me', (req, res, next) => {
   console.log("REQ DOT USER", req.user);
   if (req.user instanceof Student) {
+    // console.log('INSIDE INSTANCE OF STUDENT')
     // res.redirect(`/students/${req.user.id}`)
     res.json({ userType: "students", user: req.user })
   } else if (req.user instanceof Instructor) {
+    // console.log('INSIDE INSTANCE OF INSTRUCTOR')
     res.json({ userType: "instructors", user: req.user })
+  } else {
+    res.json({ message: 'No User' })
   }
 })
 

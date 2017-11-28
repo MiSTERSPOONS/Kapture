@@ -2,10 +2,15 @@ const Highcharts = require('highcharts');
 
 require('highcharts/modules/exporting')(Highcharts);
 
-const characteristics = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'neutral', 'sadness', 'surprise', 'createdAt'];
+const moment = require('moment');
+
+const characteristics = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'neutral', 'sadness', 'surprise', 'normalizeDate'];
 
 const normalizeData = (data, type) => {
   return data.map((inst) => {
+      inst = Object.assign({}, inst, {normalizeDate: moment(inst.createdAt).format("MMM, D h:mma"
+    )})
+    console.log('inst: ', inst)
     return inst[type]
   })
 }
@@ -14,7 +19,6 @@ const makeHighchart = (data) => {
     data.sort( (a, b) => {
         return a.id - b.id;
     })
-
     console.log('dataaaa in HighCharts', data)
 
   Highcharts.chart('container', {
@@ -41,7 +45,8 @@ const makeHighchart = (data) => {
         minorGridLineWidth: 0,
         gridLineWidth: 0,
         alternateGridColor: null,
-        tickInterval: .05
+        tickInterval: .05,
+        valueSuffix: ' %'
 
     },
     tooltip: {
