@@ -26,22 +26,27 @@ router.post('/', (req, res, next) => {
 
 
 router.get('/:id', (req, res, next) => {
-  Instructor.findById(req.params.id, {
-    include: [{
-      model: Student,
-      include: [Emotion],
-      order: [
-        ['id', 'ASC']
-      ],
-      attributes: {
-        exclude: ['password', 'salt']
+  if (req.user instanceof Instructor &&
+      req.user.id === Number(req.params.id)) {
+    Instructor.findById(req.params.id, {
+      include: [{
+        model: Student,
+        include: [Emotion],
+        order: [
+          ['id', 'ASC']
+        ],
+        attributes: {
+          exclude: ['password', 'salt']
+        }
       }
-    }
-  ],
-    attributes: { exclude: ['password', 'salt']
-  }})
-  .then(instructor => res.json(instructor))
-  .catch(next);
+    ],
+      attributes: { exclude: ['password', 'salt']
+    }})
+    .then(instructor => res.json(instructor))
+    .catch(next);
+  } else {
+    res.status(401).send('UNAUTHORIZED');
+  }
 });
 
 // router.post('/login', (req, res, next) => {

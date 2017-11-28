@@ -4,7 +4,7 @@ const Instructor = require('../db').model('instructor');
 module.exports = router
 
 router.get('/me', (req, res, next) => {
-  // console.log('Inside AUTH/ME')
+  console.log("REQ DOT USER", req.user);
   if (req.user instanceof Student) {
     // console.log('INSIDE INSTANCE OF STUDENT')
     // res.redirect(`/students/${req.user.id}`)
@@ -22,8 +22,11 @@ router.post('/login', (req, res, next) => {
   const password = req.body.password
   const userType = req.body.userType
   if (userType === 'students') {
-   
-    Student.findOne({ where: { email } })
+
+    Student.findOne({
+      where: { email },
+      attributes: { exclude: ['password', 'salt'] }
+    })
       .then(foundStudent => {
         if (foundStudent.correctPassword(password)) {
           req.login({ userType, userId: foundStudent.id }, err => (err ? next(err) : res.json(foundStudent)));
@@ -32,7 +35,10 @@ router.post('/login', (req, res, next) => {
         }
       })
   } else if (userType === 'instructors') {
-    Instructor.findOne({ where: { email } })
+    Instructor.findOne({
+      where: { email },
+      attributes: { exclude: ['password', 'salt'] },
+    })
       .then(foundInstructor => {
         if (foundInstructor.correctPassword(password)) {
           req.login({ userType, userId: foundInstructor.id }, err => (err ? next(err) : res.json(foundInstructor)));
