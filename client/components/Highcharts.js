@@ -28,9 +28,9 @@ for(let i = 0; i < 8; i++) {
         title: {
             text: characteristics[i]
         },
-        subtitle: {
-            text: 'Emotional score over time'
-        },
+        // subtitle: {
+        //     text: 'Emotional score over time'
+        // },
         xAxis: {
             type: characteristics[8],
             labels: {
