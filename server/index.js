@@ -49,13 +49,13 @@ const createApp = () => {
     const { userId } = info;
 
     if (userType === "students") {
-      return db.model('student').findById(Number(userId))
+      return db.model('student').findById(Number(userId), { attributes: { exclude: ['password', 'salt'] } })
       .then(user => {
         return done(null, user)
       })
       .catch(done);
     } else if (userType === 'instructors'){
-      return db.model('instructor').findById(Number(userId))
+      return db.model('instructor').findById(Number(userId), { attributes: { exclude: ['password', 'salt'] } })
       .then(user => done(null, user))
       .catch(done);
     }
