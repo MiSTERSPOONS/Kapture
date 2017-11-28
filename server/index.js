@@ -1,3 +1,4 @@
+require('dotenv').config()
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
@@ -46,7 +47,7 @@ const createApp = () => {
   passport.deserializeUser((info, done) => {
     const { userType } = info;
     const { userId } = info;
-   
+
     if (userType === "students") {
       return db.model('student').findById(Number(userId))
       .then(user => {
@@ -59,7 +60,7 @@ const createApp = () => {
       .catch(done);
     }
   });
-  
+
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -70,7 +71,7 @@ const createApp = () => {
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')));
- 
+
   // sends index.html
   app.use('*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public/index.html'));

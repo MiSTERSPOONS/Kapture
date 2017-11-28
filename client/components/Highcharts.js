@@ -11,6 +11,12 @@ const normalizeData = (data, type) => {
 }
 
 const makeHighchart = (data) => {
+    data.sort( (a, b) => {
+        return a.id - b.id;
+    })
+
+    console.log('dataaaa in HighCharts', data)
+
   Highcharts.chart('container', {
     chart: {
         type: 'areaspline',
@@ -36,7 +42,7 @@ const makeHighchart = (data) => {
         gridLineWidth: 0,
         alternateGridColor: null,
         tickInterval: .05
-        
+
     },
     tooltip: {
         valueSuffix: ' %',

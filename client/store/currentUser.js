@@ -16,7 +16,7 @@ const loginUserWithEmailPassword = user => ({ type: LOGIN_USER_WITH_EMAIL_PASSWO
 // THUNK
 export const me = () => dispatch => {
   axios.get('/auth/me')
-  .then(res => { 
+  .then(res => {
     if (res.data) {
       dispatch(setUser(res.data.user))
       history.push(`/${res.data.userType}/${res.data.user.id}`)
@@ -59,9 +59,10 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
     .then( info => {
       if (userType === 'students') {
         axios.post('/api/azure/recognize', { info })
-        .then( response => {
+        .then( () => {
           if (confidence > 0.60) {
             history.push(`/${userType}/${info.userId}`)
+            dispatch(retrieveUserThunk(userType, info.userId));
           }
         })
       } else {
@@ -71,9 +72,6 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
     })
     .then(userId => {
       axios.post('/auth/loginFace', { userType, userId })
-      .then(() => {
-        dispatch(retrieveUserThunk(userType, userId));
-      })
       .catch(err => console.error(err))
     })
     .catch(error => console.error(error));
@@ -84,7 +82,7 @@ export const loginEmailPassword = (email, password, userType) => dispatch => {
   axios.post('/auth/login', loginInfo)
     .then(foundUser => {
       dispatch(loginUserWithEmailPassword(foundUser.data))
-      history.push(`/${userType}/${foundUser.data.id}`) 
+      history.push(`/${userType}/${foundUser.data.id}`)
     })
     .catch(err => console.error(err))
 }
