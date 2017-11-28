@@ -39,14 +39,18 @@ class Snapshot extends Component {
   }
         
   render() {
+    console.log('this.props.path: ', this.props.path)
     return (
       <div id="snapshot-container">
         <div className="center">
           <video id="video" width="640" height="480" autoPlay style={{ display: this.props.display }} />
         </div>
-        <div className="center">
-          <button className="kapture-button" id="snap" onClick={this.capture}>Kapture Myself</button>
-        </div>
+        {
+          this.props.path.slice(1).startsWith('snap') &&
+          <div className="center">
+            <button className="kapture-button" id="snap" onClick={this.capture}>Kapture Myself</button>
+          </div>
+        }
         <canvas id="canvas" width="640" height="480" />
       </div>
     );
@@ -55,6 +59,7 @@ class Snapshot extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    path: ownProps.match.path,
     currentUser: state.currentUser,
     userType: state.userType,
     snapshotType: state.snapshotType,

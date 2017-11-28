@@ -17,7 +17,7 @@ const loginUserWithEmailPassword = user => ({ type: LOGIN_USER_WITH_EMAIL_PASSWO
 export const me = () => dispatch => {
   axios.get('/auth/me')
   .then(res => {
-    if (res.data) {
+    if (res.data.user.id) {
       dispatch(setUser(res.data.user))
       history.push(`/${res.data.userType}/${res.data.user.id}`)
     }

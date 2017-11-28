@@ -5,7 +5,7 @@ import socket from '../socket';
 
 class Graphs extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   componentDidMount() {
@@ -17,11 +17,15 @@ class Graphs extends Component {
     socket.emit('doneKapturing')
   }
   render() {
-    const characteristics = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'neutral', 'sadness', 'surprise', 'createdAt'];
+    
     return (
       <div>
-        <div>
-          <div id="container" style={{ width: '100%', height: '500px'}} />
+        <div id='graphContainer'>
+        {
+          [0, 1, 2, 3, 4, 5, 6, 7].map(i => (
+            <div key={i} id={`container${i}`}  style={{ width: "50%", height: "300px"}} />)
+          )
+        } 
         </div>
       </div>
     )
