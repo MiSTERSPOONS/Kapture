@@ -30,7 +30,10 @@ export const retrieveUserThunk = (userType, userId) => (dispatch) => {
     .then((foundUser) => {
       dispatch(setUser(foundUser.data));
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+      alert(err + ' You are not authorized!');
+      history.push('/');
+    });
 };
 
 export const registerUserWithAPI = (imageSrc, userType, userInfo) => (dispatch) => {

@@ -8,16 +8,16 @@ router.post('/', (req, res, next) => {
   Student.create(req.body)
     .then((student) => {
       Instructor.findById(1)
-      .then( instructor => {
-        student.addInstructor(instructor);
-      })
+        .then(instructor => {
+          student.addInstructor(instructor);
+        })
       const currentStudent = {
         id: student.id,
         firstName: student.firstName,
         lastName: student.lastName,
         email: student.email
       };
-      req.login({userType: 'students', userId: student.id}, err => (err ? next(err) : res.json(currentStudent)));
+      req.login({ userType: 'students', userId: student.id }, err => (err ? next(err) : res.json(currentStudent)));
     })
     .catch((err) => {
       if (err.name === 'SequelizeUniqueConstraintError') {
@@ -29,12 +29,17 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  Student.findById(req.params.id, {
-    include: [{ all: true }],
-    attributes: { exclude: ['password', 'salt']  },
-  })
-    .then(student => res.json(student))
-    .catch(next);
+  if (req.user instanceof Student &&
+      req.user.id === Number(req.params.id)) {
+    Student.findById(req.params.id, {
+      include: [{ all: true }],
+      attributes: { exclude: ['password', 'salt'] },
+    })
+      .then(student => res.json(student))
+      .catch(next);
+  } else {
+    res.status(401).send('UNAUTHORIZED');
+  }
 });
 
 // router.get('/allStudents/:instructorId', (req, res, next) => {
