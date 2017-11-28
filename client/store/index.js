@@ -6,12 +6,14 @@ import snapshotType from './snapshotType';
 import currentUser from './currentUser';
 import userType from './userType';
 import instructor from './instructor';
+import toast from './toast';
 
 const reducer = combineReducers({
   snapshotType,
   currentUser,
   userType,
-  instructor
+  instructor,
+  toast
 });
 
 const middleware = composeWithDevTools(applyMiddleware(
@@ -25,3 +27,4 @@ export * from './snapshotType';
 export * from './currentUser';
 export * from './userType';
 export * from './instructor';
+export * from './toast';

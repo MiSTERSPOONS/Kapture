@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setUser, setSnapshotType } from '../store';
+import { setUser, setSnapshotType, setToast } from '../store';
 import { withRouter } from 'react-router-dom';
 import history from '../history';
 
@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch) => {
       const userInfo = {
         firstName: event.target.first.value,
         lastName: event.target.last.value,
-        email: event.target.email.value,
+        email: event.target.email.value.toLowerCase(),
         password: event.target.password.value,
       }
       if (event.target.confirmPass.value === userInfo.password) {
@@ -68,7 +68,11 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(setSnapshotType('signup'));
         history.push('/snapshot');
       } else {
-        alert('Passwords do not Match')
+        dispatch(setToast({
+          errorType: 'Sign Up',
+          message: 'Passwords do not Match',
+          color: 'yellow'
+        }))
       }
     }
   }

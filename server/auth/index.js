@@ -28,7 +28,7 @@ router.post('/login', (req, res, next) => {
       where: { email }
     })
       .then(foundStudent => {
-        if (foundStudent.correctPassword(password)) {
+        if (foundStudent && foundStudent.correctPassword(password)) {
           const currentStudent = {
             id: foundStudent.id,
             firstName: foundStudent.firstName,
@@ -37,7 +37,11 @@ router.post('/login', (req, res, next) => {
           };
           req.login({ userType, userId: foundStudent.id }, err => (err ? next(err) : res.json(currentStudent)));
         } else {
-          console.log('Email or Password is Incorrect')
+          res.json({
+            errorType: 'Authorization',
+            message: 'Email or Password is Incorrect',
+            color: 'crimson'
+          });
         }
       })
   } else if (userType === 'instructors') {
@@ -45,7 +49,7 @@ router.post('/login', (req, res, next) => {
       where: { email },
     })
       .then(foundInstructor => {
-        if (foundInstructor.correctPassword(password)) {
+        if (foundInstructor && foundInstructor.correctPassword(password)) {
           const currentStudent = {
             id: foundInstructor.id,
             firstName: foundInstructor.firstName,
@@ -54,7 +58,11 @@ router.post('/login', (req, res, next) => {
           };
           req.login({ userType, userId: foundInstructor.id }, err => (err ? next(err) : res.json(currentStudent)));
         } else {
-          console.log('Email or Password is Incorrect')
+          res.json({
+            errorType: 'Authorization',
+            message: 'Email or Password is Incorrect',
+            color: 'crimson'
+          });
         }
       })
   }
