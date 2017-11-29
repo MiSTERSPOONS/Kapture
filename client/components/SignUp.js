@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setUser, setSnapshotType, setToast } from '../store';
+import { setUser, setSnapshotType, setToastThunk } from '../store';
 import { withRouter } from 'react-router-dom';
 import history from '../history';
 
@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(setSnapshotType('signup'));
         history.push('/snapshot');
       } else {
-        dispatch(setToast({
+        dispatch(setToastThunk({
           errorType: 'Sign Up',
           message: 'Passwords do not Match',
           color: 'yellow'

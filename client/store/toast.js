@@ -9,6 +9,13 @@ export const setToast = toast => ({
   toast
 });
 
+export const setToastThunk = toast => dispatch => {
+  dispatch(setToast(toast))
+  setTimeout(() => {
+    dispatch(setToast({}))
+  }, 5000)
+}
+
 export default (state = {}, action) => {
   switch (action.type) {
     case SET_TOAST:
