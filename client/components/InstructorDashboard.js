@@ -47,22 +47,13 @@ class InstructorDashboard extends Component {
   }
 
   render() {
-    let backDrop = {
-      position: 'fixed',
-      width: '100%',
-      height: '100%',
-      top: '0px',
-      left: '0px',
-      zIndex: '9998',
-      background: 'rgba(0, 0, 0, 0.75)'
-    };
     return (
       <div id="instructor-container">
         {
           this.props.spinnerStatus &&
           <div>
               <Spinner />
-              <div style={backDrop}></div>
+              <div className="backdrop" />
           </div>
 
         }
