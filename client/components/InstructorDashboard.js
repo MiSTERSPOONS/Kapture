@@ -30,11 +30,11 @@ class InstructorDashboard extends Component {
   }
 
   displayEmotions() {
-    const studentArr = this.props.students.filter(student => {
-      return student.id === Number(this.state.studentId);
-    })
-    const studentEmotion = studentArr[0].emotions;
-    return studentEmotion;
+      const studentArr = this.props.students.filter(student => {
+        return student.id === Number(this.state.studentId);
+      })
+      const studentEmotion = studentArr[0] && studentArr[0].emotions;
+      return studentEmotion;
   }
 
   handleChange(event) {
@@ -48,7 +48,7 @@ class InstructorDashboard extends Component {
         <button onClick={this.kaptureClassEmotion}>Kapture Class Emotions
         </button>
         <select onChange={this.handleChange}>
-          <option>Select a Student</option>
+          <option value={this.state.studentId}>Select a Student</option>
           {
             this.props.students && this.props.students.map(student => {
               return (
@@ -58,7 +58,7 @@ class InstructorDashboard extends Component {
           }
         </select>
         {
-          this.state.studentId ?
+          this.state.studentId && this.props.currentUser.id ?
           <Graphs emotions={this.displayEmotions()} /> :
           null
         }

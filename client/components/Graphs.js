@@ -18,7 +18,6 @@ class Graphs extends Component {
   }
   componentWillReceiveProps(nextEmotions) {
     makeHighchart(nextEmotions.emotions)
-    console.log(nextEmotions.emotions);
     socket.emit('doneKapturing')
   }
   render() {
@@ -29,9 +28,8 @@ class Graphs extends Component {
       top: '0px',
       left: '0px',
       zIndex: '9998',
-      background: 'rgba(0, 0, 0, 0.3)'
+      background: 'rgba(0, 0, 0, 0.75)'
     };
-    console.log(this.state.currentIndex, this.state.currentStyle)
     return (
       <div>
         <div id='graphContainer'>
