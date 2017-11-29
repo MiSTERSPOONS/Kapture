@@ -39,7 +39,6 @@ router.post('/recognize', (req, res, next) => {
   }
 )
   .then(response => {
-    console.log('res in kairos', response)
     res.send(stringify(response));
   })
   .catch(next)

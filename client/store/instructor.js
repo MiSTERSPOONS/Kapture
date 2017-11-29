@@ -6,7 +6,6 @@ const getAllStudents = (students) => ({ type: GET_ALL_STUDENTS, students})
 
 // thunk later
 export const retrieveInstructorStudents = (instructorId) => dispatch => {
-  console.log('hitting thunk from retrieve all instructors students......')
   axios.get(`/api/students/allStudents/${instructorId}`)
   .then(res => dispatch(getAllStudents(res.data)))
   .catch(err => console.error(err))

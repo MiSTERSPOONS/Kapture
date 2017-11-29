@@ -71,7 +71,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     sendCapture: (imageBase64, userType, userInfo, snapshotType) => {
       if (snapshotType === 'signup') {
-        console.log("*** IN SIGNUP ****")
         dispatch(setSnapshotType('login'));
         dispatch(registerUserWithAPI(imageBase64, userType, userInfo));
       } else {
