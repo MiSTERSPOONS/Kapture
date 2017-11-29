@@ -47,28 +47,17 @@ class InstructorDashboard extends Component {
   }
 
   render() {
-    let backDrop = {
-      position: 'fixed',
-      width: '100%',
-      height: '100%',
-      top: '0px',
-      left: '0px',
-      zIndex: '9998',
-      background: 'rgba(0, 0, 0, 0.75)'
-    };
     return (
-      <div>
+      <div id="instructor-container">
         {
           this.props.spinnerStatus &&
           <div>
               <Spinner />
-              <div style={backDrop}></div>
+              <div className="backdrop" />
           </div>
 
         }
-        <button onClick={this.kaptureClassEmotion}>Kapture Class Emotions
-        </button>
-        <select onChange={this.handleChange}>
+        <select className="form-control" onChange={this.handleChange}>
           <option value={this.state.studentId}>Select a Student</option>
           {
             this.props.students && this.props.students.map(student => {
@@ -78,6 +67,10 @@ class InstructorDashboard extends Component {
             })
           }
         </select>
+        <div className="center">
+          <button className="kapture-button" onClick={this.kaptureClassEmotion}>Kapture Class Emotions
+          </button>
+        </div>
         {
           this.state.studentId && this.props.currentUser.id ?
           <Graphs emotions={this.displayEmotions()} /> :
