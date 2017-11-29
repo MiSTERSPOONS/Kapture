@@ -23,7 +23,7 @@ class Graphs extends Component {
   }
   render() {
     let backDrop = {
-      position: 'absolute',
+      position: 'fixed',
       width: '100%',
       height: '100%',
       top: '0px',
@@ -40,7 +40,7 @@ class Graphs extends Component {
             <div key={i} id={`container${i}`} onClick={(event) => {
               const target = event.currentTarget;
               const style = Object.assign({}, target.style);
-              target.style.position = "absolute";
+              target.style.position = "fixed";
               target.style.top = "50%";
               target.style.left = "50%";
               target.style.transform = "translate(-50%, -50%)";
