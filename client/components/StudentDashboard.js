@@ -19,7 +19,7 @@ class StudentDashboard extends Component {
   render() {
     let student = this.props.currentUser;
     return (
-      <div>
+      <div id="student-container">
       <Snapshot display="none" />
       <h1>Hello, {student.firstName}!</h1>
       {

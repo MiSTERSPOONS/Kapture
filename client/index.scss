@@ -1,45 +1,17 @@
+// COLORS
 $primary-color: #5B33C8;
 $secondary-color: #8D6B94;
 
+// GENERAL USE
 body {
   font-family: 'Raleway', sans-serif;
   margin: 0;
 }
-
-.highcharts-credits {
-  display: none;
-}
-
-#graphContainer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-div[id^="container"] {
-  width: 50%;
-  height: 300px;
-}
-
-.yellow {
-  background-color: gold;
-}
-.crimson {
-  background-color: crimson;
-}
-.orange {
-  background-color: #F77F00;
-}
-
-#toast-container {
-  padding: 20px;
-  position: absolute;
-  bottom: 5%;
-  right: 5%;
-  width: 400px;
+.center {
   text-align: center;
 }
 
+// WELCOME
 #welcome-container {
   padding-top: 10vh;
   height: 90vh;
@@ -67,6 +39,16 @@ div[id^="container"] {
   }
 }
 
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+#logout-link {
+  float: right;
+  text-align: right;
+}
+
+// MAIN
 #main-container {
   display: flex;
   justify-content: center;
@@ -75,16 +57,19 @@ div[id^="container"] {
     display: none;
   }
 }
-
 #login-container, #signup-container {
   margin: 8%;
 }
 
+// VIDEO AND BUTTONS
 #snapshot-container, #login-container, #signup-container {
   #video {
     border: 3px solid $primary-color;
     width: 640px;
     height: 480px;
+  }
+  #canvas {
+    display: none;
   }
   .login-buttons {
     margin-top: 15px;
@@ -115,14 +100,60 @@ div[id^="container"] {
   }
 }
 
-.center {
+#instructor-container, #student-container {
+  padding: 3%;
+  .kapture-button {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 18px;
+    margin: 10px;
+    border-radius: 0px;
+    padding: 10px;
+    border: 1px solid black;
+    text-decoration: none;
+    background-color: $primary-color;
+    color: white;
+    &:hover {
+      background-color: white;
+      color: $primary-color;
+    }
+  }
+}
+
+// TOAST
+.yellow {
+  background-color: gold;
+}
+.crimson {
+  background-color: crimson;
+}
+.orange {
+  background-color: #F77F00;
+}
+#toast-container {
+  padding: 20px;
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  width: 400px;
   text-align: center;
 }
 
-#canvas {
+// CHART
+.highcharts-credits {
   display: none;
 }
+#graphContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+div[id^="container"] {
+  width: 50%;
+  height: 300px;
+}
 
+// SPINNER
 .spinner {
   z-index: 9999;
   margin: 100px auto;
@@ -134,7 +165,6 @@ div[id^="container"] {
   top: -20;
   left: calc(50% - 75px);
 }
-
 .spinner > div {
   background-color: #b7eade;
   height: 100%;
@@ -144,32 +174,26 @@ div[id^="container"] {
   -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
   animation: sk-stretchdelay 1.2s infinite ease-in-out;
 }
-
 .spinner .rect2 {
   -webkit-animation-delay: -1.1s;
   animation-delay: -1.1s;
 }
-
 .spinner .rect3 {
   -webkit-animation-delay: -1.0s;
   animation-delay: -1.0s;
 }
-
 .spinner .rect4 {
   -webkit-animation-delay: -0.9s;
   animation-delay: -0.9s;
 }
-
 .spinner .rect5 {
   -webkit-animation-delay: -0.8s;
   animation-delay: -0.8s;
 }
-
 @-webkit-keyframes sk-stretchdelay {
   0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
   20% { -webkit-transform: scaleY(1.0) }
 }
-
 @keyframes sk-stretchdelay {
   0%, 40%, 100% {
     transform: scaleY(0.4);
@@ -177,5 +201,31 @@ div[id^="container"] {
   }  20% {
     transform: scaleY(1.0);
     -webkit-transform: scaleY(1.0);
+  }
+}
+
+@media (max-width: 500px) {
+  #main-container {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    #login-form {
+      margin-top: 20px;
+      display: none;
+    }
+  }
+  #login-container, #signup-container {
+    margin: 8%;
+    text-align: center;
+  }
+  #snapshot-container, #login-container, #signup-container {
+    #video, #canvas {
+      width: 90%;
+      height: 90%;
+    }
+  }
+  div[id^="container"] {
+    width: 100%;
+    height: 300px;
   }
 }

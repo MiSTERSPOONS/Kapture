@@ -12,7 +12,7 @@ const Navigation = (props) => {
       <Link className="navbar-brand" to="/">Kapture</Link>
       {
         props.currentUser.id ?
-          <a href="#" onClick={props.handleClick}>Logout</a>
+          <a id="logout-link" href="#" onClick={props.handleClick}>Logout</a>
           :
           null
       }
