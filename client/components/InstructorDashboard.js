@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { retrieveUserThunk } from '../store';
+import { showSpinner, removeSpinner } from '../store/spinner';
 import { Snapshot } from '../components';
+import Spinner from './Spinner';
 import Graphs from './Graphs';
 
 import socket from '../socket'
@@ -21,11 +23,13 @@ class InstructorDashboard extends Component {
   componentDidMount() {
     this.props.getStudentEmotion(this.props.userType || 'instructors', this.props.match.params.id);
     socket.on('doneKapturing', () => {
+      this.props.removeSpinner();
       this.props.getStudentEmotion(this.props.userType || 'instructors', this.props.match.params.id)
     })
   }
 
   kaptureClassEmotion() {
+    this.props.showSpinner();
     socket.emit('kaptureImage')
   }
 
@@ -43,8 +47,25 @@ class InstructorDashboard extends Component {
   }
 
   render() {
+    let backDrop = {
+      position: 'fixed',
+      width: '100%',
+      height: '100%',
+      top: '0px',
+      left: '0px',
+      zIndex: '9998',
+      background: 'rgba(0, 0, 0, 0.75)'
+    };
     return (
       <div>
+        {
+          this.props.spinnerStatus &&
+          <div>
+              <Spinner />
+              <div style={backDrop}></div>
+          </div>
+
+        }
         <button onClick={this.kaptureClassEmotion}>Kapture Class Emotions
         </button>
         <select onChange={this.handleChange}>
@@ -71,7 +92,8 @@ const mapStateToProps = (state) => {
   return {
     userType: state.userType,
     currentUser: state.currentUser,
-    students: state.currentUser.students
+    students: state.currentUser.students,
+    spinnerStatus: state.spinner
   }
 }
 
@@ -79,6 +101,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getStudentEmotion: (type, id) => {
       dispatch(retrieveUserThunk(type, id));
+    },
+    showSpinner: () => {
+      dispatch(showSpinner());
+    },
+    removeSpinner: () => {
+      dispatch(removeSpinner());
     }
   }
 };

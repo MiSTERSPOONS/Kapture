@@ -1,6 +1,7 @@
 import axios from 'axios';
 import history from '../history';
 import { setToast, setToastThunk } from './toast';
+import { showSpinner, removeSpinner } from './spinner';
 
 // Action Type
 
@@ -37,21 +38,27 @@ export const retrieveUserThunk = (userType, userId) => (dispatch) => {
 };
 
 export const registerUserWithAPI = (imageSrc, userType, userInfo) => (dispatch) => {
+  dispatch(showSpinner());
   axios.post(`/api/${userType}`, userInfo)
     .then(newUser => {
       const reqBody = { image: imageSrc, gallery_name: userType, subject_id: newUser.data.id };
       dispatch(setUser(newUser.data));
       return axios.post('/api/kairos/enroll', reqBody)
         .then(response => {
+          dispatch(removeSpinner());
           history.push(`/${userType}/${newUser.data.id}`)
         })
     })
-    .catch(error => console.error(error));
+    .catch(error => {
+      dispatch(removeSpinner());
+      console.error(error)
+    });
 };
 
 export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
   const reqBody = { image: imageSrc, gallery_name: userType };
   let confidence;
+  dispatch(showSpinner());
   axios.post('/api/kairos/recognize', reqBody)
     .then(response => {
       confidence = response.data.data.images[0].candidates[0].confidence
@@ -72,17 +79,19 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
               axios.post('/api/azure/recognize', { info })
                 .then(() => dispatch(retrieveUserThunk(userType, info.userId)))
             }
+            dispatch(removeSpinner());
             history.push(`/${userType}/${info.userId}`)
           })
       }
     })
     .catch(err => {
+      dispatch(removeSpinner());
       dispatch(setToastThunk({
         errorType: 'Login Error',
         message: 'Unable to Kapture/verify face.',
         color: 'orange'
       }));
-      console.error(error)
+      console.error(err)
     })
 }
 
