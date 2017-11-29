@@ -16,6 +16,11 @@ body {
   flex-wrap: wrap;
 }
 
+div[id^="container"] {
+  width: 50%;
+  height: 300px;
+}
+  
 .yellow {
   background-color: gold;
 }

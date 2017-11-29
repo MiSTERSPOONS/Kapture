@@ -39,7 +39,6 @@ class Snapshot extends Component {
   }
         
   render() {
-    console.log('this.props.path: ', this.props.path)
     return (
       <div id="snapshot-container">
         <div className="center">
@@ -76,7 +75,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         dispatch(setSnapshotType('login'));
         dispatch(registerUserWithAPI(imageBase64, userType, userInfo));
       } else {
-        console.log("*** IN LOGIN ****")
         dispatch(loginUserWithAPI(imageBase64, userType))
       }
     }

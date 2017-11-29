@@ -18,6 +18,7 @@ const loginUserWithEmailPassword = user => ({ type: LOGIN_USER_WITH_EMAIL_PASSWO
 export const me = () => dispatch => {
   axios.get('/auth/me')
   .then(res => {
+    console.log('reqUserinMEEEE', res.data.user.id)
     if (res.data.user.id) {
       dispatch(setUser(res.data.user))
       history.push(`/${res.data.userType}/${res.data.user.id}`)
@@ -27,12 +28,16 @@ export const me = () => dispatch => {
 }
 
 export const retrieveUserThunk = (userType, userId) => (dispatch) => {
+  console.log('userType', userType)
+  console.log('userId', userId)
   axios.get(`/api/${userType}/${userId}`)
     .then((foundUser) => {
+      console.log('FOUNDUSER =>', foundUser)
       dispatch(setUser(foundUser.data));
     })
     .catch(err => {
-      alert(err + ' You are not authorized!');
+      // alert(err + ' You are not authorized!');
+      console.log('IN PLACE OF THE ALERT')
       history.push('/');
     });
 };
@@ -56,6 +61,7 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
   axios.post('/api/kairos/recognize', reqBody)
     .then( response => {
       confidence = response.data.data.images[0].candidates[0].confidence
+      console.log('CONFIDENCE =>', confidence)
       let imageURL = response.data.data.uploaded_image_url
       let userId = response.data.data.images[0].candidates[0].subject_id
       return { imageURL, userId }
@@ -65,17 +71,20 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
         axios.post('/api/azure/recognize', { info })
         .then( () => {
           if (confidence > 0.60) {
-            history.push(`/${userType}/${info.userId}`)
             dispatch(retrieveUserThunk(userType, info.userId));
+          } else {
+            // replace with toast
+            console.log('REPLACE WITH TOAST HERE')
           }
         })
       } else {
-        history.push(`/${userType}/${info.userId}`)
+        // history.push(`/${userType}/${info.userId}`)
       }
       return info.userId
     })
     .then(userId => {
       axios.post('/auth/loginFace', { userType, userId })
+      .then(() => history.push(`/${userType}/${userId}`))
       .catch(err => console.error(err))
     })
     .catch(error => {
