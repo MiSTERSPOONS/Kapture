@@ -26,9 +26,9 @@ router.post('/', (req, res, next) => {
 
 
 router.get('/:id', (req, res, next) => {
-  if (req.user instanceof Instructor &&
-      req.user.id === Number(req.params.id)) {
-    Instructor.findById(req.params.id, {
+  console.log('REQ.USER =>', req.user)
+  if (req.user instanceof Instructor && Number(req.user.id) === Number(req.params.id)) {
+    Instructor.findById(Number(req.params.id), {
       include: [{
         model: Student,
         include: [Emotion],
@@ -42,9 +42,13 @@ router.get('/:id', (req, res, next) => {
     ],
       attributes: { exclude: ['password', 'salt']
     }})
-    .then(instructor => res.json(instructor))
+    .then(instructor => {
+      console.log('sending instructor in api/instructors:', instructor)
+      res.json(instructor)
+    })
     .catch(next);
   } else {
+    console.log('ERRRRRROORRRRRR')
     res.status(401).send('UNAUTHORIZED');
   }
 });

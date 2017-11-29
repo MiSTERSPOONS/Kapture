@@ -75,7 +75,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         dispatch(setSnapshotType('login'));
         dispatch(registerUserWithAPI(imageBase64, userType, userInfo));
       } else {
-        console.log("*** IN LOGIN ****")
         dispatch(loginUserWithAPI(imageBase64, userType))
       }
     }

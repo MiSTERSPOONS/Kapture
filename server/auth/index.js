@@ -64,6 +64,7 @@ router.post('/login', (req, res, next) => {
 })
 
 router.post('/loginFace', (req, res, next) => {
+  console.log('loginFace: req =>', req)
   const userType = req.body.userType
   const userId = req.body.userId
   if (userType === 'students') {
