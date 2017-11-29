@@ -105,7 +105,9 @@ export const logout = () => dispatch => {
     .then(_ => {
       dispatch(removeUser())
     })
-    .then(() => history.push('/'))
+    .then(() => {
+      history.push('/')
+    })
     .catch(err => console.error(err))
 }
 
