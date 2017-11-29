@@ -17,27 +17,21 @@ const loginUserWithEmailPassword = user => ({ type: LOGIN_USER_WITH_EMAIL_PASSWO
 // THUNK
 export const me = () => dispatch => {
   axios.get('/auth/me')
-  .then(res => {
-    console.log('reqUserinMEEEE', res.data.user.id)
-    if (res.data.user.id) {
-      dispatch(setUser(res.data.user))
-      history.push(`/${res.data.userType}/${res.data.user.id}`)
-    }
-  })
-  .catch(err => console.error(err))
+    .then(res => {
+      if (res.data.user.id) {
+        dispatch(setUser(res.data.user))
+        history.push(`/${res.data.userType}/${res.data.user.id}`)
+      }
+    })
+    .catch(err => console.error(err))
 }
 
 export const retrieveUserThunk = (userType, userId) => (dispatch) => {
-  console.log('userType', userType)
-  console.log('userId', userId)
   axios.get(`/api/${userType}/${userId}`)
     .then((foundUser) => {
-      console.log('FOUNDUSER =>', foundUser)
       dispatch(setUser(foundUser.data));
     })
     .catch(err => {
-      // alert(err + ' You are not authorized!');
-      console.log('IN PLACE OF THE ALERT')
       history.push('/');
     });
 };
@@ -59,43 +53,37 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
   const reqBody = { image: imageSrc, gallery_name: userType };
   let confidence;
   axios.post('/api/kairos/recognize', reqBody)
-    .then( response => {
+    .then(response => {
       confidence = response.data.data.images[0].candidates[0].confidence
-      console.log('CONFIDENCE =>', confidence)
       let imageURL = response.data.data.uploaded_image_url
       let userId = response.data.data.images[0].candidates[0].subject_id
-      return { imageURL, userId }
-    })
-    .then( info => {
-      if (userType === 'students') {
-        axios.post('/api/azure/recognize', { info })
-        .then( () => {
-          if (confidence > 0.60) {
-            dispatch(retrieveUserThunk(userType, info.userId));
-          } else {
-            // replace with toast
-            console.log('REPLACE WITH TOAST HERE')
-          }
-        })
+      let info = { imageURL, userId }
+      if (confidence < 0.60) {
+        dispatch(setToast({
+          errorType: 'Login Error',
+          message: 'Unable to Kapture/verify face.',
+          color: 'orange'
+        }));
       } else {
-        // history.push(`/${userType}/${info.userId}`)
+        axios.post('/auth/loginFace', { userType, userId })
+          .then(() => {
+            if (userType === 'students') {
+              axios.post('/api/azure/recognize', { info })
+                .then(() => dispatch(retrieveUserThunk(userType, info.userId)))
+            }
+            history.push(`/${userType}/${info.userId}`)
+          })
       }
-      return info.userId
     })
-    .then(userId => {
-      axios.post('/auth/loginFace', { userType, userId })
-      .then(() => history.push(`/${userType}/${userId}`))
-      .catch(err => console.error(err))
-    })
-    .catch(error => {
+    .catch(err => {
       dispatch(setToast({
         errorType: 'Login Error',
         message: 'Unable to Kapture/verify face.',
         color: 'orange'
       }));
       console.error(error)
-    });
-};
+    })
+}
 
 export const loginEmailPassword = (email, password, userType) => dispatch => {
   let loginInfo = { email, password, userType }
@@ -113,12 +101,12 @@ export const loginEmailPassword = (email, password, userType) => dispatch => {
 }
 
 export const logout = () => dispatch => {
-    axios.post('/auth/logout')
-      .then(_ => {
-        dispatch(removeUser())
-        history.push('/')
-      })
-      .catch(err => console.error(err))
+  axios.post('/auth/logout')
+    .then(_ => {
+      dispatch(removeUser())
+    })
+    .then(() => history.push('/'))
+    .catch(err => console.error(err))
 }
 
 export default (state = {}, action) => {
