@@ -7,13 +7,15 @@ import currentUser from './currentUser';
 import userType from './userType';
 import instructor from './instructor';
 import toast from './toast';
+import spinner from './spinner';
 
 const reducer = combineReducers({
   snapshotType,
   currentUser,
   userType,
   instructor,
-  toast
+  toast,
+  spinner
 });
 
 const middleware = composeWithDevTools(applyMiddleware(
