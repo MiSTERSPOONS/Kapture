@@ -1,6 +1,6 @@
 import axios from 'axios';
 import history from '../history';
-import { setToast } from './toast';
+import { setToast, setToastThunk } from './toast';
 
 // Action Type
 
@@ -59,7 +59,7 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
       let userId = response.data.data.images[0].candidates[0].subject_id
       let info = { imageURL, userId }
       if (confidence < 0.60) {
-        dispatch(setToast({
+        dispatch(setToastThunk({
           errorType: 'Login Error',
           message: 'Unable to Kapture/verify face.',
           color: 'orange'
@@ -67,6 +67,7 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
       } else {
         axios.post('/auth/loginFace', { userType, userId })
           .then(() => {
+            dispatch(setToast({}))
             if (userType === 'students') {
               axios.post('/api/azure/recognize', { info })
                 .then(() => dispatch(retrieveUserThunk(userType, info.userId)))
@@ -76,7 +77,7 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
       }
     })
     .catch(err => {
-      dispatch(setToast({
+      dispatch(setToastThunk({
         errorType: 'Login Error',
         message: 'Unable to Kapture/verify face.',
         color: 'orange'
@@ -90,7 +91,7 @@ export const loginEmailPassword = (email, password, userType) => dispatch => {
   axios.post('/auth/login', loginInfo)
     .then(foundUser => {
       if (foundUser.data.errorType) {
-        dispatch(setToast(foundUser.data));
+        dispatch(setToastThunk(foundUser.data));
       } else {
         dispatch(setToast({}));
         dispatch(loginUserWithEmailPassword(foundUser.data))
