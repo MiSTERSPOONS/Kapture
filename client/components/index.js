@@ -8,3 +8,4 @@ export { default as InstructorDashboard } from './InstructorDashboard';
 export { default as Toast } from './Toast';
 export { default as PieGraphs } from './PieGraphs';
 export { default as LineGraphs } from './LineGraphs';
+export { default as NoData } from './NoData';

@@ -6,7 +6,11 @@ import { showSpinner, removeSpinner } from '../store/spinner';
 import { Snapshot } from '../components';
 import Spinner from './Spinner';
 import Graphs from './Graphs';
+<<<<<<< HEAD
 // import { selectedStudentEmotions } from '../store'
+=======
+import NoData from './NoData'
+>>>>>>> b5378ca753ae60ed09a588752c4f5f2cfcce66b5
 
 import socket from '../socket'
 
@@ -118,7 +122,7 @@ class InstructorDashboard extends Component {
           }}>Create Quiz</button>
         </div>
         {
-          this.state.studentId && this.props.currentUser.id ? <Graphs emotions={this.displayEmotions()} /> : <div>NO LENGTH</div>
+          this.state.studentId && this.props.currentUser.id ? <Graphs emotions={this.displayEmotions()} /> : <NoData />
         }
       </div>
     )

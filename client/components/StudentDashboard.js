@@ -62,7 +62,7 @@ class StudentDashboard extends Component {
           <h1>Hello, {student.firstName}!</h1>
           {
             student.emotions && student.emotions.length >= 1 ?
-            <Graphs emotions={student.emotions}/>
+            <Graphs emotions={student.emotions} /> : <div>NO LENGTH</div>
           }
         </div>
       </div>
