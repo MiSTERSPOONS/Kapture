@@ -5,6 +5,8 @@ import store, { setSnapshotType, registerUserWithAPI, loginUserWithAPI } from '.
 import socket from '../socket'
 import Spinner from './Spinner';
 
+
+
 class Snapshot extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +17,7 @@ class Snapshot extends Component {
   componentDidMount() {
     socket.on('kaptureImage', () => {
       this.capture()
-    })
+    });
     const videoBox = document.getElementById('video');
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
@@ -27,6 +29,7 @@ class Snapshot extends Component {
 
 
   capture() {
+    console.log("Are you being run");
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
     let context = canvas.getContext('2d');
@@ -45,6 +48,7 @@ class Snapshot extends Component {
       <div id="snapshot-container">
         {
           this.props.spinnerStatus &&
+          !this.props.isSetIntervalOn &&
           <div>
               <Spinner />
               <div className="backdrop" />
@@ -54,7 +58,7 @@ class Snapshot extends Component {
           <video id="video" width="640" height="480" autoPlay style={{ display: this.props.display }} />
         </div>
         {
-          this.props.path.slice(1).startsWith('snap') &&
+          /* this.props.path.slice(1).startsWith('snap') && */
           <div className="center">
             <button className="kapture-button" id="snap" onClick={this.capture}>Kapture Myself</button>
           </div>
@@ -72,7 +76,7 @@ const mapStateToProps = (state, ownProps) => {
     userType: state.userType,
     snapshotType: state.snapshotType,
     display: ownProps.display,
-    spinnerStatus: state.spinner
+    spinnerStatus: state.spinner,
   }
 }
 
