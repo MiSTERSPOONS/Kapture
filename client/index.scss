@@ -184,6 +184,15 @@ div[id^="container"] {
   }
 }
 
+#pieContainer {
+  margin: 0 auto;
+  width: 800px;
+  height: 800px;
+}
+
+.highcharts-pie-series .highcharts-data-label-connector {
+  stroke-width: 3px;
+}
 @media (max-width: 500px) {
   #main-container {
     display: flex;
