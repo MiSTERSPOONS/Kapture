@@ -23,8 +23,8 @@ class StudentDashboard extends Component {
       <Snapshot display="none" />
       <h1>Hello, {student.firstName}!</h1>
       {
-        student.emotions &&
-        <Graphs emotions={student.emotions}/>
+        student.emotions && student.emotions.length >= 1 ?
+        <Graphs emotions={student.emotions} /> : <div>NO LENGTH</div>
       }
       </div>
     )

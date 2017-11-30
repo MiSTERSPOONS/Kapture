@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { retrieveUserThunk } from '../store';
 import { Snapshot } from '../components';
 import Graphs from './Graphs';
+// import { selectedStudentEmotions } from '../store'
 
 import socket from '../socket'
 
@@ -58,9 +59,7 @@ class InstructorDashboard extends Component {
           }
         </select>
         {
-          this.state.studentId && this.props.currentUser.id ?
-          <Graphs emotions={this.displayEmotions()} /> :
-          null
+          this.state.studentId && this.props.currentUser.id ? <Graphs emotions={this.displayEmotions()} /> : <div>NO LENGTH</div>
         }
       </div>
     )

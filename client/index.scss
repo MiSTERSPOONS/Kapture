@@ -122,3 +122,12 @@ div[id^="container"] {
   display: none;
 }
 
+#pieContainer {
+  margin: 0 auto;
+  width: 800px;
+  height: 800px;
+}
+
+.highcharts-pie-series .highcharts-data-label-connector {
+  stroke-width: 3px;
+}

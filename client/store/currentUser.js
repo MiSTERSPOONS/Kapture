@@ -32,6 +32,7 @@ export const retrieveUserThunk = (userType, userId) => (dispatch) => {
       dispatch(setUser(foundUser.data));
     })
     .catch(err => {
+      console.error(err)
       history.push('/');
     });
 };
@@ -82,7 +83,7 @@ export const loginUserWithAPI = (imageSrc, userType) => (dispatch) => {
         message: 'Unable to Kapture/verify face.',
         color: 'orange'
       }));
-      console.error(error)
+      console.error(err)
     })
 }
 
