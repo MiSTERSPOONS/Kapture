@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { makeHighchart, makePiechart } from './Highcharts';
 import PieGraphs from './PieGraphs'
 import LineGraphs from './LineGraphs'
 import socket from '../socket';
@@ -15,10 +14,9 @@ class Graphs extends Component {
     }
   }
 
-  // componentWillReceiveProps(nextEmotions) {
-  //   makeHighchart(nextEmotions.emotions)
-  //   socket.emit('doneKapturing')
-  // }
+  componentWillReceiveProps(nextEmotions) {
+    socket.emit('doneKapturing')
+  }
 
   render() {
     return (
