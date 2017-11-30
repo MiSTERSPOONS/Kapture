@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PieGraphs from './PieGraphs'
 import LineGraphs from './LineGraphs'
 import socket from '../socket';
+import NoData from './NoData'
 
 class Graphs extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class Graphs extends Component {
     return (
       <div>
         {
-          this.props.emotions.length > 0 ? (this.props.emotions.length > 1 ? <LineGraphs emotions={this.props.emotions} /> : <PieGraphs emotions={this.props.emotions} />) : <div>NO LENGTH IN GRAPGH</div>
+          this.props.emotions.length > 0 ? (this.props.emotions.length > 1 ? <LineGraphs emotions={this.props.emotions} /> : <PieGraphs emotions={this.props.emotions} />) : <NoData />
         }
       </div>
     )
