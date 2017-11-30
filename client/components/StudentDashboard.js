@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { retrieveUserThunk } from '../store';
 import { Snapshot } from '../components';
+import Spinner from './Spinner';
 import Graphs from './Graphs';
 
 import socket from '../socket';
@@ -15,17 +16,18 @@ class StudentDashboard extends Component {
     this.props.getStudentEmotion(this.props.userType || 'students', this.props.match.params.id);
   }
 
-  
   render() {
     let student = this.props.currentUser;
     return (
-      <div>
+      <div id="student-container">
       <Snapshot display="none" />
       <h1>Hello, {student.firstName}!</h1>
       {
         student.emotions && student.emotions.length >= 1 ?
         <Graphs emotions={student.emotions} /> : <div>NO LENGTH</div>
       }
+
+
       </div>
     )
   }

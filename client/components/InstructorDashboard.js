@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { retrieveUserThunk } from '../store';
+import { showSpinner, removeSpinner } from '../store/spinner';
 import { Snapshot } from '../components';
+import Spinner from './Spinner';
 import Graphs from './Graphs';
 // import { selectedStudentEmotions } from '../store'
 
@@ -22,11 +24,13 @@ class InstructorDashboard extends Component {
   componentDidMount() {
     this.props.getStudentEmotion(this.props.userType || 'instructors', this.props.match.params.id);
     socket.on('doneKapturing', () => {
+      this.props.removeSpinner();
       this.props.getStudentEmotion(this.props.userType || 'instructors', this.props.match.params.id)
     })
   }
 
   kaptureClassEmotion() {
+    this.props.showSpinner();
     socket.emit('kaptureImage')
   }
 
@@ -45,10 +49,16 @@ class InstructorDashboard extends Component {
 
   render() {
     return (
-      <div>
-        <button onClick={this.kaptureClassEmotion}>Kapture Class Emotions
-        </button>
-        <select onChange={this.handleChange}>
+      <div id="instructor-container">
+        {
+          this.props.spinnerStatus &&
+          <div>
+              <Spinner />
+              <div className="backdrop" />
+          </div>
+
+        }
+        <select className="form-control" onChange={this.handleChange}>
           <option value={this.state.studentId}>Select a Student</option>
           {
             this.props.students && this.props.students.map(student => {
@@ -58,6 +68,10 @@ class InstructorDashboard extends Component {
             })
           }
         </select>
+        <div className="center">
+          <button className="kapture-button" onClick={this.kaptureClassEmotion}>Kapture Class Emotions
+          </button>
+        </div>
         {
           this.state.studentId && this.props.currentUser.id ? <Graphs emotions={this.displayEmotions()} /> : <div>NO LENGTH</div>
         }
@@ -70,7 +84,8 @@ const mapStateToProps = (state) => {
   return {
     userType: state.userType,
     currentUser: state.currentUser,
-    students: state.currentUser.students
+    students: state.currentUser.students,
+    spinnerStatus: state.spinner
   }
 }
 
@@ -78,6 +93,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getStudentEmotion: (type, id) => {
       dispatch(retrieveUserThunk(type, id));
+    },
+    showSpinner: () => {
+      dispatch(showSpinner());
+    },
+    removeSpinner: () => {
+      dispatch(removeSpinner());
     }
   }
 };
