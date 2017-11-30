@@ -51,7 +51,7 @@ class Graphs extends Component {
               })
             }}/>)
           )
-        } 
+        }
         </div>
         {
           this.state.isModalOpen &&

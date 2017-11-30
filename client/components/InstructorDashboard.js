@@ -55,7 +55,6 @@ class InstructorDashboard extends Component {
   }
 
   render() {
-    console.log(this.state.answers);
     return (
       <div id="instructor-container">
         {

@@ -13,14 +13,15 @@ class StudentDashboard extends Component {
     super(props)
     this.state = {
       quiz: null,
-      answer: null
+      answer: null,
+      isSetIntervalOn: false
     }
   }
   componentDidMount() {
     this.props.getStudentEmotion(this.props.userType || 'students', this.props.match.params.id);
     socket.on('sendQuiz', (payload) => {
       this.setState({
-        quiz: payload
+        quiz: payload,
       })
     })
   }
@@ -41,7 +42,7 @@ class StudentDashboard extends Component {
               socket.emit('submitAnswer', {studentId: this.props.currentUser.id, answer, title: this.state.quiz.title });
               this.setState({
                 quiz: null,
-                answer
+                answer,
               });
             }}>
               <div className="form-group">
