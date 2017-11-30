@@ -14,6 +14,9 @@ class InstructorDashboard extends Component {
     super(props)
     this.state = {
       studentId: null,
+      isQuizFormOpen: false,
+      quiz: null,
+      answers: []
     }
     this.displayEmotions = this.displayEmotions.bind(this)
     this.kaptureClassEmotion = this.kaptureClassEmotion.bind(this)
@@ -25,12 +28,17 @@ class InstructorDashboard extends Component {
     socket.on('doneKapturing', () => {
       this.props.removeSpinner();
       this.props.getStudentEmotion(this.props.userType || 'instructors', this.props.match.params.id)
+    });
+    socket.on('submitAnswer', payload => {
+      this.setState({
+        answers: this.state.answers.concat([payload])
+      })
     })
   }
 
   kaptureClassEmotion() {
     this.props.showSpinner();
-    socket.emit('kaptureImage')
+    socket.emit('kaptureImage');
   }
 
   displayEmotions() {
@@ -47,8 +55,41 @@ class InstructorDashboard extends Component {
   }
 
   render() {
+    console.log(this.state.answers);
     return (
       <div id="instructor-container">
+        {
+          this.state.isQuizFormOpen &&
+          <div>
+            <div className="backdrop" />
+            <div className="questionForm">
+              <form onSubmit={(event) => {
+                const quiz = {
+                  title: event.target.title.value,
+                  question: event.target.question.value
+                };
+                event.preventDefault();
+                this.setState(() => {
+                  socket.emit('sendQuiz', quiz);
+                  return {
+                    isQuizFormOpen: false,
+                    quiz
+                  }
+                })
+              }}>
+                <div className="form-group">
+                  <label htmlFor="title">Title</label>
+                  <input className="form-control" type="text" name="title" placeholder="Type a title" />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="question">Question</label>
+                  <textarea className="form-control" name="question" placeholder="Create a question"></textarea>
+                </div>
+                <button className="submit-quiz-button" type="submit">Submit</button>
+              </form>
+            </div>
+          </div>
+        }
         {
           this.props.spinnerStatus &&
           <div>
@@ -70,6 +111,11 @@ class InstructorDashboard extends Component {
         <div className="center">
           <button className="kapture-button" onClick={this.kaptureClassEmotion}>Kapture Class Emotions
           </button>
+          <button className="quiz-button" onClick={(_) => {
+            this.setState({
+              isQuizFormOpen: true
+            })
+          }}>Create Quiz</button>
         </div>
         {
           this.state.studentId && this.props.currentUser.id ?

@@ -108,6 +108,14 @@ const startListening = () => {
       socket.broadcast.emit('kaptureImage')
     })
 
+    socket.on('sendQuiz', (payload) => {
+      socket.broadcast.emit('sendQuiz', payload);
+    });
+
+    socket.on('submitAnswer', (payload) => {
+      socket.broadcast.emit('submitAnswer', payload);
+    });
+
     socket.on('doneKapturing', () => {
       socket.broadcast.emit('doneKapturing')
     })
