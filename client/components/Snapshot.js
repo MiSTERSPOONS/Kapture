@@ -54,7 +54,7 @@ class Snapshot extends Component {
           <video id="video" width="640" height="480" autoPlay style={{ display: this.props.display }} />
         </div>
         {
-          this.props.path.slice(1).startsWith('snap') &&
+          /* this.props.path.slice(1).startsWith('snap') && */
           <div className="center">
             <button className="kapture-button" id="snap" onClick={this.capture}>Kapture Myself</button>
           </div>

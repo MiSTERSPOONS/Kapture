@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { makeHighchart } from './Highcharts';
+import socket from '../socket';
 
 export default class LineGraphs extends Component {
   constructor(props) {
@@ -13,6 +14,11 @@ export default class LineGraphs extends Component {
 
   componentDidMount() {
     makeHighchart(this.props.emotions)
+  }
+
+  componentWillReceiveProps(nextEmotions) {
+    makeHighchart(nextEmotions.emotions)
+    socket.emit('doneKapturing')
   }
 
   render() {
