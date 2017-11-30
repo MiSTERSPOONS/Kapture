@@ -33,6 +33,7 @@ export const retrieveUserThunk = (userType, userId) => (dispatch) => {
       dispatch(setUser(foundUser.data));
     })
     .catch(err => {
+      console.error(err)
       history.push('/');
     });
 };
