@@ -5,6 +5,7 @@ import { retrieveUserThunk } from '../store';
 import { Snapshot } from '../components';
 import Spinner from './Spinner';
 import Graphs from './Graphs';
+import NoData from './NoData';
 
 import socket from '../socket';
 
@@ -62,7 +63,7 @@ class StudentDashboard extends Component {
           <h1>Hello, {student.firstName}!</h1>
           {
             student.emotions && student.emotions.length >= 1 ?
-            <Graphs emotions={student.emotions} /> : <div>NO LENGTH</div>
+            <Graphs emotions={student.emotions} /> : <NoData />
           }
         </div>
       </div>
