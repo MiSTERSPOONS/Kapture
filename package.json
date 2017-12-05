@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server",
-    "test": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/kapture-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --recursive --watch",
+    "test": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/kapture-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --recursive --watch --exit",
     "build-client": "webpack",
     "build-client-watch": "webpack -w",
     "start-dev": "npm run build-client-watch & npm run start-server",
