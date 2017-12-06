@@ -27,3 +27,7 @@ You can try out the app on [Heroku](https://kapture-wdf.herokuapp.com/), or inst
 _Node, Express, PostgreSQL, Sequelize, React, Redux, Socket.io, Kairos Facial Recognition API, Microsoft Azure Emotion API, Highcharts, SCSS, Mocha, Chai, Enzyme_
 
 Copyright (c) 2017 **_Jonathan Ahn, Jonathan Chang, Xifeng Jin, Andrew Niekamp_**
+
+![Signup Layout](/public/images/layout-signup.png "Signup Layout")
+
+![Dashboard Layout](/public/images/layout-dashboard.png "Dashboard Layout")
