@@ -19,6 +19,7 @@ class Snapshot extends Component {
       this.capture()
     });
     const videoBox = document.getElementById('video');
+    
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
         videoBox.src = window.URL.createObjectURL(stream);
