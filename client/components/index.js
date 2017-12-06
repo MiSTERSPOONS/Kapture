@@ -5,6 +5,7 @@ export { default as SignUp } from './SignUp';
 export { default as Snapshot } from './Snapshot';
 export { default as StudentDashboard } from './StudentDashboard';
 export { default as InstructorDashboard } from './InstructorDashboard';
+export { default as PostCourse } from './PostCourse';
 export { default as Toast } from './Toast';
 export { default as PieGraphs } from './PieGraphs';
 export { default as LineGraphs } from './LineGraphs';
