@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { me } from '../store';
 
-class Welcome extends Component {
+export class Welcome extends Component {
   constructor(props) {
     super(props)
   }
