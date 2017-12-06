@@ -2,6 +2,10 @@
 
 #### By _**Jonathan Ahn, Jonathan Chang, Xifeng Jin, Andrew Niekamp**_
 
+![Signup Layout](/client/public/images/layout-signup.png "Signup Layout")
+
+![Dashboard Layout](/client/public/images/layout-dashboard.png "Dashboard Layout")
+
 ## Description
 
 _An in-browser platform for instructors to gain an understanding of an individual or a class’ emotional level using Kairos Emotional Analysis and Facial Recognition API, to assess the progression of the lesson over a period of time._
