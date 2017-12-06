@@ -8,6 +8,7 @@ import userType from './userType';
 import instructor from './instructor';
 import toast from './toast';
 import spinner from './spinner';
+import course from './course';
 
 const reducer = combineReducers({
   snapshotType,
@@ -15,7 +16,8 @@ const reducer = combineReducers({
   userType,
   instructor,
   toast,
-  spinner
+  spinner,
+  course
 });
 
 const middleware = composeWithDevTools(applyMiddleware(
@@ -30,3 +32,4 @@ export * from './currentUser';
 export * from './userType';
 export * from './instructor';
 export * from './toast';
+export * from './course';
