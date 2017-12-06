@@ -9,7 +9,7 @@ import NoData from './NoData';
 
 import socket from '../socket';
 
-class StudentDashboard extends Component {
+export class StudentDashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {

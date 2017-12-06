@@ -5,50 +5,37 @@ import store from '../../client/store';
 import { showSpinner, removeSpinner } from '../../client/store/spinner';
 import { setUser, removeUser } from '../../client/store/currentUser';
 
-describe.only('Reducer', () => {
+describe('Reducer', () => {
   let testStore;
-  let x
-  
+
   beforeEach('make testStore', () => {
     console.log('store from reducer.spec', store.getState())
     testStore = store
-    x=4
   })
 
   it('checks initial state', () => {
     console.log('but does not really do anythin')
     expect(store.getState()).to.be.deep.equal(
-      { snapshotType: '',
-      currentUser: {},
-      userType: '',
-      instructor: [],
-      toast: {},
-      spinner: false }
+      {
+        snapshotType: '',
+        currentUser: {},
+        userType: '',
+        instructor: [],
+        toast: {},
+        spinner: false,
+        course: {}
+      }
     )
   })
 
   it('switches spinner reducer to true when SHOW_SPINNER called', () => {
     testStore.dispatch(showSpinner())
-    expect(store.getState()).to.be.deep.equal(
-      { snapshotType: '',
-      currentUser: {},
-      userType: '',
-      instructor: [],
-      toast: {},
-      spinner: true }
-    )
+    expect(store.getState().spinner).to.be.equal(true)
   })
 
   it('switches spinner reducer back to false when REMOVE_SPINNER called', () => {
     testStore.dispatch(removeSpinner())
-    expect(store.getState()).to.be.deep.equal(
-      { snapshotType: '',
-      currentUser: {},
-      userType: '',
-      instructor: [],
-      toast: {},
-      spinner: false }
-    )
+    expect(store.getState().spinner).to.be.equal(false)
   })
 
   it('adds user to the Store when setUser is called', () => {
@@ -56,50 +43,38 @@ describe.only('Reducer', () => {
       firstName: 'StudentFirst',
       lastName: 'StudentLast',
       email: 'student@example.com',
-      instructors: [{ 
+      instructors: [{
         firstName: 'InstFirst',
         lastName: 'InstLast',
       }],
-      courses: [{ 
+      courses: [{
         name: 'StudentCourse'
       }],
-      cohort: { 
+      cohort: {
         name: 'StudentCohort'
       }
     }))
-    expect(store.getState()).to.be.deep.equal(
-      { snapshotType: '',
-      currentUser: {
+    expect(store.getState().currentUser).to.be.deep.equal(
+      {
         firstName: 'StudentFirst',
         lastName: 'StudentLast',
         email: 'student@example.com',
-        instructors: [{ 
+        instructors: [{
           firstName: 'InstFirst',
           lastName: 'InstLast',
         }],
-        courses: [{ 
+        courses: [{
           name: 'StudentCourse'
         }],
-        cohort: { 
+        cohort: {
           name: 'StudentCohort'
         }
-      },
-      userType: '',
-      instructor: [],
-      toast: {},
-      spinner: false }
+      }
     )
   })
 
   it('removes user from the Store when removeUser is called', () => {
     testStore.dispatch(removeUser())
-    expect(store.getState()).to.be.deep.equal(
-      { snapshotType: '',
-      currentUser: {},
-      userType: '',
-      instructor: [],
-      toast: {},
-      spinner: false }
-    )
+    expect(store.getState().currentUser).to.be.deep.equal({})
   })
 })
