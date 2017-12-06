@@ -12,7 +12,7 @@ const LOGIN_USER_WITH_EMAIL_PASSWORD = 'LOGIN_USER_WITH_EMAIL_PASSWORD'
 // Action Creators
 
 export const setUser = user => ({ type: RETRIEVE_USER, user });
-const removeUser = () => ({ type: REMOVE_USER })
+export const removeUser = () => ({ type: REMOVE_USER })
 const loginUserWithEmailPassword = user => ({ type: LOGIN_USER_WITH_EMAIL_PASSWORD, user })
 
 // THUNK

@@ -10,7 +10,7 @@ const { window } = jsdom;
 Enzyme.configure({ adapter: new Adapter() });
 
 import { Welcome } from '../../client/components/Welcome.js';
-// import store from '../../client/store';
+
 function copyProps(src, target) {
   const props = Object.getOwnPropertyNames(src)
     .filter(prop => typeof target[prop] === 'undefined')
@@ -30,7 +30,7 @@ copyProps(window, global);
 
 const didMount = sinon.spy()
 
-describe.only('<Welcome />', () => {
+describe('<Welcome />', () => {
   let wrapper;
   let getMe = stub();
   beforeEach(() => {
@@ -43,40 +43,15 @@ describe.only('<Welcome />', () => {
   });
 
   it('<h1> equals Welcome to Kapture', () => {
-    // const student = mockItem();
     expect(wrapper.find('h1').text()).to.equal('Welcome to Kapture')
   });
 
   it('2 Links to be rendered', () => {
-    // const student = mockItem();
     expect(wrapper.find('Link').length).to.equal(2)
   });
 
   it('1 logo to be rendered', () => {
-    // const student = mockItem();
     expect(wrapper.find('img').length).to.equal(1)
   });
-  // it('it renders one component', () => {
-  // expect(wrapper.find(Welcome).contains('Welcome to Kapture')).to.equal(true);
-  // });
-
-  // it('renders a check mark when complete', () => {
-  //   const item = mockItem({ complete: true });
-  //   const wrapper = shallow(<ToDoItem item={item} />);
-  //   expect(wrapper.find('.item-mark').text()).to.equal('✓');
-  // });
-
-  // it('renders a bullet when not complete', () => {
-  //   const item = mockItem({ complete: false });
-  //   const wrapper = shallow(<ToDoItem item={item} />);
-  //   expect(wrapper.find('.item-mark').text()).to.equal('•');
-  // });
-  // it('calls onCompleteChange handler with the right arguments when clicked', () => {
-  //   const spy = sinon.spy();
-  //   const item = mockItem();
-  //   const wrapper = shallow(<ToDoItem item={item} onCompleteChange={spy} />);
-  //   wrapper.find('.item-button').simulate('click');
-  //   expect(spy.calledOnce).to.be.true;
-  //   expect(spy.calledWith(item, false)).to.be.true;
-  // });
+ 
 });
